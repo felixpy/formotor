@@ -1,0 +1,33 @@
+{
+  "name": "formotor",
+  "version": "0.1.0",
+  "description": "A lightweight jquery/zepto component framework for forms inspired by vue.js.",
+  "main": "dist/formotor.js",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "test": "jest"
+  },
+  "repository": "git@github.com:felixpy/formotor.git",
+  "author": "felixpy <felixpy.1993@gmail.com>",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.6",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^5.2.0",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-jest": "^21.18.0",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "jest": "^23.4.1",
+    "rollup": "^0.63.4",
+    "rollup-plugin-babel": "^3.0.7",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-uglify": "^4.0.0"
+  }
+}
