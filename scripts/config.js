@@ -1,12 +1,15 @@
 const babel = require('rollup-plugin-babel')
 const uglify = require('rollup-plugin-uglify').uglify
 const resolve = require('rollup-plugin-node-resolve')
+const replace = require('rollup-plugin-replace')
+const commonjs = require('rollup-plugin-commonjs')
 const version = process.env.VERSION || require('../package.json').version
 const banner = '/**\n * Formotor.js v' + version + '\n * (c) 2018 Felix Yang \n */'
 const moduleName = 'Formotor'
 
 const commonPlugins = [
   resolve(),
+  commonjs(),
   babel({
     exclude: 'node_modules/**'
   })
@@ -15,13 +18,13 @@ const builds = {
   'esm': {
     input: {
       input: 'src/index.js',
+      external: ['jquery'],
       plugins: [
         ...commonPlugins
       ]
     },
     output: {
       file: 'dist/formotor.esm.js',
-      externals: ['jquery'],
       format: 'es',
       banner
     }
@@ -29,14 +32,17 @@ const builds = {
   'umd': {
     input: {
       input: 'src/index.js',
+      external: ['jquery'],
       plugins: [
         ...commonPlugins
       ]
     },
     output: {
       file: 'dist/formotor.js',
-      externals: ['jquery'],
       format: 'umd',
+      globals: {
+        jquery: 'jQuery'
+      },
       name: moduleName,
       banner
     }
@@ -44,6 +50,7 @@ const builds = {
   'umd-min': {
     input: {
       input: 'src/index.js',
+      external: ['jquery'],
       plugins: [
         ...commonPlugins,
         uglify()
@@ -51,8 +58,10 @@ const builds = {
     },
     output: {
       file: 'dist/formotor.min.js',
-      externals: ['jquery'],
       format: 'umd',
+      globals: {
+        jquery: 'jQuery'
+      },
       name: moduleName,
       banner
     }
@@ -60,13 +69,16 @@ const builds = {
   'zepto-esm': {
     input: {
       input: 'src/index.js',
+      external: ['zepto'],
       plugins: [
+        replace({
+          jquery: 'zepto'
+        }),
         ...commonPlugins
       ]
     },
     output: {
       file: 'dist/formotor.zepto.esm.js',
-      externals: ['zepto'],
       format: 'es',
       banner
     }
@@ -74,14 +86,20 @@ const builds = {
   'zepto-umd': {
     input: {
       input: 'src/index.js',
+      external: ['zepto'],
       plugins: [
+        replace({
+          jquery: 'zepto'
+        }),
         ...commonPlugins
       ]
     },
     output: {
       file: 'dist/formotor.zepto.js',
-      externals: ['zepto'],
       format: 'umd',
+      globals: {
+        zepto: 'Zepto'
+      },
       name: moduleName,
       banner
     }
@@ -89,15 +107,21 @@ const builds = {
   'zepto-umd-min': {
     input: {
       input: 'src/index.js',
+      external: ['zepto'],
       plugins: [
+        replace({
+          jquery: 'zepto'
+        }),
         ...commonPlugins,
         uglify()
       ]
     },
     output: {
       file: 'dist/formotor.zepto.min.js',
-      externals: ['zepto'],
       format: 'umd',
+      globals: {
+        zepto: 'Zepto'
+      },
       name: moduleName,
       banner
     }

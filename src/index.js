@@ -1,5 +1,7 @@
+import JZ from 'jquery'
+
 function Formotor () {
-  return '@todo'
+  return JZ
 }
 
 export default Formotor
