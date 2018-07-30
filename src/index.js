@@ -1,7 +1,10 @@
-import JZ from 'jquery'
+import Formotor from './instance'
+import { registryGlobalAPI } from './global'
+import { registryProto } from './proto'
 
-function Formotor () {
-  return JZ
-}
+registryProto()
+registryGlobalAPI(Formotor)
+
+Formotor.version = '__VERSION__'
 
 export default Formotor

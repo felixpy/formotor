@@ -14,12 +14,24 @@ const commonPlugins = [
     exclude: 'node_modules/**'
   })
 ]
+const uglifyOptions = {
+  output: {
+    comments: function (node, comment) {
+      if (comment.type === 'comment2') {
+        return /(c)/i.test(comment.value)
+      }
+    }
+  }
+}
 const builds = {
   'esm': {
     input: {
       input: 'src/index.js',
       external: ['jquery'],
       plugins: [
+        replace({
+          __VERSION__: version
+        }),
         ...commonPlugins
       ]
     },
@@ -34,6 +46,9 @@ const builds = {
       input: 'src/index.js',
       external: ['jquery'],
       plugins: [
+        replace({
+          __VERSION__: version
+        }),
         ...commonPlugins
       ]
     },
@@ -52,8 +67,11 @@ const builds = {
       input: 'src/index.js',
       external: ['jquery'],
       plugins: [
+        replace({
+          __VERSION__: version
+        }),
         ...commonPlugins,
-        uglify()
+        uglify(uglifyOptions)
       ]
     },
     output: {
@@ -72,7 +90,8 @@ const builds = {
       external: ['zepto'],
       plugins: [
         replace({
-          jquery: 'zepto'
+          jquery: 'zepto',
+          __VERSION__: version
         }),
         ...commonPlugins
       ]
@@ -89,7 +108,8 @@ const builds = {
       external: ['zepto'],
       plugins: [
         replace({
-          jquery: 'zepto'
+          jquery: 'zepto',
+          __VERSION__: version
         }),
         ...commonPlugins
       ]
@@ -110,10 +130,11 @@ const builds = {
       external: ['zepto'],
       plugins: [
         replace({
-          jquery: 'zepto'
+          jquery: 'zepto',
+          __VERSION__: version
         }),
         ...commonPlugins,
-        uglify()
+        uglify(uglifyOptions)
       ]
     },
     output: {
