@@ -13,8 +13,10 @@ const globalConfig = {
 
   // middlewares that apply to each value
   middlewares: {
-    'textarea,[type=text]': function (value = '') {
-      return value.trim()
+    trim: {
+      'textarea,[type=text]': function (value = '') {
+        return value.trim()
+      }
     }
   }
 }
@@ -52,10 +54,12 @@ function getElementValue (elem, config = {}) {
   let rawName = JZElem.attr(postName) || elem.name
   let rawValue = JZElem.val()
 
-  JZ.each(middlewares, function (selector, fn) {
-    if (JZElem.is(selector) && isFunction(fn)) {
-      rawValue = isArray(rawValue) ? rawValue.map(v => fn.call(elem, v)) : fn.call(elem, rawValue)
-    }
+  JZ.each(middlewares, function (group, groupConfig) {
+    JZ.each(groupConfig, function (selector, fn) {
+      if (JZElem.is(selector) && isFunction(fn)) {
+        rawValue = isArray(rawValue) ? rawValue.map(v => fn.call(elem, v)) : fn.call(elem, rawValue)
+      }
+    })
   })
 
   if (rawValue == null) {
@@ -221,26 +225,40 @@ function setValues (JZForm, values = {}, options = {}, config = {}) {
   renderValueToForm(JZForm, values, options, mergedConfig)
 }
 
-function setConfig (config = {}) {
-  JZ.extend(true, globalConfig, config)
+function getConfig (key) {
+  if (isString(key)) {
+    return globalConfig[key]
+  }
+  return JZ.extend(true, {}, globalConfig)
 }
 
-function registryProto () {
-  const apis = {
+function setConfig (firstArg = {}, secondArg = null) {
+  if (isString(firstArg)) {
+    globalConfig[firstArg] = secondArg
+  }
+  JZ.extend(true, globalConfig, firstArg)
+}
+
+function registryProto (Formotor) {
+  const formotorProtoAPI = {
     getValue,
     setValue,
     getValues,
-    setValues,
-    setConfig
+    setValues
   }
 
+  // configuration
+  Formotor.getConfig = getConfig
+  Formotor.setConfig = setConfig
+
+  // proto api
   JZ.fn.formotor = function (key) {
     if (isString(key)) {
       const mt = function () {
         let args = toArray(arguments)
         args = [this].concat(args)
-        if (apis[key]) {
-          return apis[key].apply(this, args)
+        if (formotorProtoAPI[key]) {
+          return formotorProtoAPI[key].apply(this, args)
         }
       }
       if (isFunction(mt)) {

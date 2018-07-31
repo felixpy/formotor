@@ -2,7 +2,7 @@ import Formotor from './instance'
 import { registryGlobalAPI } from './global'
 import { registryProto } from './proto'
 
-registryProto()
+registryProto(Formotor)
 registryGlobalAPI(Formotor)
 
 Formotor.version = '__VERSION__'
