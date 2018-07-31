@@ -6,7 +6,7 @@
   "module": "dist/formotor.esm.js",
   "scripts": {
     "build": "node scripts/build.js",
-    "test": "jest --config test/unit/jest.config.js"
+    "test": "jest --config jest.config.js"
   },
   "repository": "git@github.com:felixpy/formotor.git",
   "author": "felixpy <felixpy.1993@gmail.com>",

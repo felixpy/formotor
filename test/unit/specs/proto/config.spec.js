@@ -1,7 +1,7 @@
 import Formotor from 'src/index'
 
-describe('set config by object', () => {
-  test('setConfig/getConfig', () => {
+describe('set and get config', () => {
+  test('object option', () => {
     Formotor.setConfig({
       postNameAttr: 'jz-post-name'
     })
