@@ -16,6 +16,20 @@
     this._init(options);
   }
 
+  var _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
   function includes(target, value) {
     return Array.prototype.indexOf.call(target, value) !== -1;
   }
@@ -54,13 +68,33 @@
 
     // middlewares that apply to each value
     middlewares: {
-      'textarea,[type=text]': function textareaTypeText() {
-        var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+      trim: {
+        'textarea,[type=text]': function textareaTypeText() {
+          var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
 
-        return value.trim();
+          return value.trim();
+        }
       }
     }
   };
+
+  function getConfig(key) {
+    if (isString(key)) {
+      return globalConfig[key];
+    }
+    return JZ.extend(true, {}, globalConfig);
+  }
+
+  function setConfig() {
+    var firstArg = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var secondArg = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
+    if (isString(firstArg)) {
+      globalConfig[firstArg] = secondArg;
+    }
+    JZ.extend(true, globalConfig, firstArg);
+  }
+
   var regs = {
     tag: /^(?:input|select|textarea|keygen)/i,
     check: /^(?:checkbox|radio)$/i,
@@ -95,12 +129,14 @@
     var rawName = JZElem.attr(postName) || elem.name;
     var rawValue = JZElem.val();
 
-    JZ.each(middlewares, function (selector, fn) {
-      if (JZElem.is(selector) && isFunction(fn)) {
-        rawValue = isArray(rawValue) ? rawValue.map(function (v) {
-          return fn.call(elem, v);
-        }) : fn.call(elem, rawValue);
-      }
+    JZ.each(middlewares, function (group, groupConfig) {
+      JZ.each(groupConfig, function (selector, fn) {
+        if (JZElem.is(selector) && isFunction(fn)) {
+          rawValue = isArray(rawValue) ? rawValue.map(function (v) {
+            return fn.call(elem, v);
+          }) : fn.call(elem, rawValue);
+        }
+      });
     });
 
     if (rawValue == null) {
@@ -282,28 +318,28 @@
     renderValueToForm(JZForm, values, options, mergedConfig);
   }
 
-  function setConfig() {
-    var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var valueProtoAPI = /*#__PURE__*/Object.freeze({
+    getValue: getValue,
+    setValue: setValue,
+    getValues: getValues,
+    setValues: setValues
+  });
 
-    JZ.extend(true, globalConfig, config);
-  }
+  var PROTO_APIS = _extends({}, valueProtoAPI);
 
-  function registryProto() {
-    var apis = {
-      getValue: getValue,
-      setValue: setValue,
-      getValues: getValues,
-      setValues: setValues,
-      setConfig: setConfig
-    };
+  function registryProto(Formotor) {
+    // configuration
+    Formotor.getConfig = getConfig;
+    Formotor.setConfig = setConfig;
 
+    // proto api
     JZ.fn.formotor = function (key) {
       if (isString(key)) {
         var mt = function mt() {
           var args = toArray$1(arguments);
           args = [this].concat(args);
-          if (apis[key]) {
-            return apis[key].apply(this, args);
+          if (PROTO_APIS[key]) {
+            return PROTO_APIS[key].apply(this, args);
           }
         };
         if (isFunction(mt)) {
@@ -316,7 +352,7 @@
     };
   }
 
-  registryProto();
+  registryProto(Formotor);
 
   Formotor.version = '0.1.0';
 

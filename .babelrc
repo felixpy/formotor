@@ -5,11 +5,12 @@
       {
         "modules": false
       }
-    ]
+    ],
+    "stage-2"
   ],
   "env": {
     "test": {
-      "presets": ["env"]
+      "presets": ["env", "stage-2"]
     }
   }
 }
