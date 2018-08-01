@@ -4,7 +4,7 @@ const resolve = require('rollup-plugin-node-resolve')
 const replace = require('rollup-plugin-replace')
 const commonjs = require('rollup-plugin-commonjs')
 const version = process.env.VERSION || require('../package.json').version
-const banner = '/**\n * Formotor.js v' + version + '\n * (c) 2018 Felix Yang \n */'
+const banner = '/**\n * Formotor.js v' + version + '\n * (c) 2018 Felix Yang\n */'
 const moduleName = 'Formotor'
 
 const commonPlugins = [

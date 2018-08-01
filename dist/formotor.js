@@ -1,6 +1,6 @@
 /**
  * Formotor.js v0.1.0
- * (c) 2018 Felix Yang 
+ * (c) 2018 Felix Yang
  */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('jquery')) :
@@ -11,9 +11,10 @@
   JZ = JZ && JZ.hasOwnProperty('default') ? JZ['default'] : JZ;
 
   function Formotor() {
-    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  }
 
-    this._init(options);
+  function registryGlobalAPI(Formotor) {
+    Formotor.JZ = JZ;
   }
 
   var _extends = Object.assign || function (target) {
@@ -34,6 +35,10 @@
     return Array.prototype.indexOf.call(target, value) !== -1;
   }
 
+  function isUndef(value) {
+    return typeof value === 'undefined';
+  }
+
   function isString(value) {
     return typeof value === 'string';
   }
@@ -43,11 +48,7 @@
   }
 
   function isArray(value) {
-    if (Array.isArray) {
-      return Array.isArray(value);
-    } else {
-      return Object.prototype.toString.apply(value) === '[object Array]';
-    }
+    return Object.prototype.toString.apply(value) === '[object Array]';
   }
 
   function toArray$1(target) {
@@ -58,13 +59,16 @@
 
   var globalConfig = {
     // custom element name
-    postNameAttr: 'data-post-name',
+    postName: 'data-post-name',
 
     // ignore appointed elements
-    ignoreSelector: '.fm-ignore',
+    ignore: '.fm-ignore',
 
-    // alow formotor to access disabled elements
-    accessibleSelector: '.fm-accessible',
+    // alow formotor to access appointed disabled elements
+    accessible: '.fm-accessible',
+
+    // alow formotor to access all disabled elements
+    disableMode: false,
 
     // middlewares that apply to each value
     middlewares: {
@@ -111,10 +115,10 @@
 
     var JZElem = JZ(elem);
     var isValidTags = !regs.invalidTags.test(elem.type);
-    var hasName = this.name || JZElem.attr(postName);
-    var isChecked = elem.checked || !regs.check.test(this.type);
+    var hasName = elem.name || JZElem.attr(postName);
+    var isChecked = elem.checked || !regs.check.test(elem.type);
     var ignoreFactor = !JZElem.is(ignore);
-    var disableFactor = disableMode ? JZElem.is(':disabled:not(' + accessible + ')') : true;
+    var disableFactor = !disableMode ? !JZElem.is(':disabled:not(' + accessible + ')') : true;
 
     return isValidTags && hasName && isChecked && disableFactor && ignoreFactor;
   }
@@ -157,7 +161,7 @@
   }
 
   function serializeToArray(JZForm) {
-    var config = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+    var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
     return JZForm.map(function () {
       return this.elements ? toArray$1(this.elements) : this;
@@ -227,7 +231,7 @@
     var convertToArray = false;
     var get = function get(value, multi) {
       if (value != null) {
-        if (result != null) {
+        if (isUndef(result)) {
           result = multi ? [value] : value;
           if (multi) {
             convertToArray = true;
@@ -250,9 +254,9 @@
         var multi = JZItem.is(':checkbox');
         if (this.checked) {
           get(this.value, multi);
-        } else {
-          get(JZItem.val(), false);
         }
+      } else {
+        get(JZItem.val(), false);
       }
     });
 
@@ -264,11 +268,11 @@
     var config = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
     var mergedConfig = JZ.extend(true, {}, globalConfig, config);
-    var JZRealForm = JZForm.is('form,:input') ? JZForm : JZForm.find(':input');
-    var valueArray = serializeToArray(JZRealForm, options, mergedConfig);
+    var JZRealForm = JZForm.is('form') ? JZForm : JZForm.find(':input');
+    var valueArray = serializeToArray(JZRealForm, mergedConfig);
     var valuesObject = convertArrayToObject(valueArray);
     var valuesObjectCopy = JZ.extend(true, {}, valuesObject);
-    var customValuesObject = getCustomValues(JZRealForm, options, mergedConfig, valuesObjectCopy);
+    var customValuesObject = getCustomValues(JZForm, options, mergedConfig, valuesObjectCopy);
 
     return JZ.extend(valuesObject, customValuesObject);
   }
@@ -285,7 +289,7 @@
       var JZElements = JZForm.find(selector).add(JZForm.filter(selector));
 
       if (isFunction(opt)) {
-        opt.apply(JZElements, [JZForm, value]);
+        opt.apply(JZElements, [JZForm, value, values]);
       } else {
         setValue(JZElements, value);
       }
@@ -335,24 +339,22 @@
     // proto api
     JZ.fn.formotor = function (key) {
       if (isString(key)) {
-        var mt = function mt() {
-          var args = toArray$1(arguments);
-          args = [this].concat(args);
-          if (PROTO_APIS[key]) {
-            return PROTO_APIS[key].apply(this, args);
+        var fn = function fn() {
+          var api = PROTO_APIS[key];
+          var args = [this].concat(toArray$1(arguments));
+          if (api) {
+            return api.apply(this, args);
           }
+          return this;
         };
-        if (isFunction(mt)) {
-          var args = toArray$1(arguments).slice(1);
-          return mt.apply(this, args);
-        } else {
-          return mt;
-        }
+        return fn.apply(this, toArray$1(arguments).slice(1));
       }
+      return this;
     };
   }
 
   registryProto(Formotor);
+  registryGlobalAPI(Formotor);
 
   Formotor.version = '0.1.0';
 

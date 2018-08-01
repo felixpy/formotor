@@ -1,5 +1,7 @@
-function registryGlobalAPI () {
-  // @todo
+import JZ from 'jquery'
+
+function registryGlobalAPI (Formotor) {
+  Formotor.JZ = JZ
 }
 
 export {

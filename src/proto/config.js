@@ -3,13 +3,16 @@ import { isString } from '../util'
 
 const globalConfig = {
   // custom element name
-  postNameAttr: 'data-post-name',
+  postName: 'data-post-name',
 
   // ignore appointed elements
-  ignoreSelector: '.fm-ignore',
+  ignore: '.fm-ignore',
 
-  // alow formotor to access disabled elements
-  accessibleSelector: '.fm-accessible',
+  // alow formotor to access appointed disabled elements
+  accessible: '.fm-accessible',
+
+  // alow formotor to access all disabled elements
+  disableMode: false,
 
   // middlewares that apply to each value
   middlewares: {

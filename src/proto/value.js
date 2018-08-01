@@ -1,5 +1,5 @@
 import JZ from 'jquery'
-import { toArray, isFunction, isArray, includes } from '../util'
+import { toArray, isUndef, isFunction, isArray, includes } from '../util'
 import { globalConfig } from './config'
 
 const regs = {
@@ -18,10 +18,10 @@ function isActiveElements (elem, config = {}) {
   } = config
   const JZElem = JZ(elem)
   const isValidTags = !regs.invalidTags.test(elem.type)
-  const hasName = this.name || JZElem.attr(postName)
-  const isChecked = elem.checked || !regs.check.test(this.type)
+  const hasName = elem.name || JZElem.attr(postName)
+  const isChecked = elem.checked || !regs.check.test(elem.type)
   const ignoreFactor = !JZElem.is(ignore)
-  const disableFactor = disableMode ? JZElem.is(`:disabled:not(${accessible})`) : true
+  const disableFactor = !disableMode ? !JZElem.is(`:disabled:not(${accessible})`) : true
 
   return isValidTags && hasName && isChecked && disableFactor && ignoreFactor
 }
@@ -61,7 +61,7 @@ function getElementValue (elem, config = {}) {
   }
 }
 
-function serializeToArray (JZForm, options = {}, config = {}) {
+function serializeToArray (JZForm, config = {}) {
   return JZForm
     .map(function () {
       return this.elements ? toArray(this.elements) : this
@@ -127,7 +127,7 @@ function getValue (JZElem) {
   let convertToArray = false
   const get = (value, multi) => {
     if (value != null) {
-      if (result != null) {
+      if (isUndef(result)) {
         result = multi ? [value] : value
         if (multi) {
           convertToArray = true
@@ -150,9 +150,9 @@ function getValue (JZElem) {
       const multi = JZItem.is(':checkbox')
       if (this.checked) {
         get(this.value, multi)
-      } else {
-        get(JZItem.val(), false)
       }
+    } else {
+      get(JZItem.val(), false)
     }
   })
 
@@ -161,11 +161,11 @@ function getValue (JZElem) {
 
 function getValues (JZForm, options = {}, config = {}) {
   const mergedConfig = JZ.extend(true, {}, globalConfig, config)
-  const JZRealForm = JZForm.is('form,:input') ? JZForm : JZForm.find(':input')
-  const valueArray = serializeToArray(JZRealForm, options, mergedConfig)
+  const JZRealForm = JZForm.is('form') ? JZForm : JZForm.find(':input')
+  const valueArray = serializeToArray(JZRealForm, mergedConfig)
   const valuesObject = convertArrayToObject(valueArray)
   const valuesObjectCopy = JZ.extend(true, {}, valuesObject)
-  const customValuesObject = getCustomValues(JZRealForm, options, mergedConfig, valuesObjectCopy)
+  const customValuesObject = getCustomValues(JZForm, options, mergedConfig, valuesObjectCopy)
 
   return JZ.extend(valuesObject, customValuesObject)
 }
@@ -180,7 +180,7 @@ function renderValueToForm (JZForm, values = {}, options = {}, config = {}) {
     const JZElements = JZForm.find(selector).add(JZForm.filter(selector))
 
     if (isFunction(opt)) {
-      opt.apply(JZElements, [JZForm, value])
+      opt.apply(JZElements, [JZForm, value, values])
     } else {
       setValue(JZElements, value)
     }

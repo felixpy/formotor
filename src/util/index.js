@@ -6,6 +6,10 @@ export function isObject (value) {
   return value !== null && typeof value === 'object'
 }
 
+export function isUndef (value) {
+  return typeof value === 'undefined'
+}
+
 export function isString (value) {
   return typeof value === 'string'
 }
@@ -15,11 +19,7 @@ export function isFunction (value) {
 }
 
 export function isArray (value) {
-  if (Array.isArray) {
-    return Array.isArray(value)
-  } else {
-    return Object.prototype.toString.apply(value) === '[object Array]'
-  }
+  return Object.prototype.toString.apply(value) === '[object Array]'
 }
 
 export function hasKey (target, key) {
