@@ -4,7 +4,7 @@
 
 Formotor(means "form motor") is a lightweight and pure component framework based on jQuery/Zepto. It is mainly used for some more traditional and huge back-end systems. These systems may still use jQuery-related technologies for a variety of reasons, and it is difficult to migrate to a framework such as Vue in a short period of time.
 
-Formotor lacks features such as two-way binding, but it completely implements a component framework that contains events and instructions, allowing you to more clearly organize your application code for later maintenance.
+Formotor lacks features such as two-way binding, but it completely implements a component framework that contains events and directives, allowing you to more clearly organize your application code for later maintenance.
 
 In addition, Formotor provides very complete support for the acquisition and backfilling of form values. Even if you don't use a component system, you can still use some very useful APIs to manipulate form data.
 
