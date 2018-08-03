@@ -1,10 +1,10 @@
 # Basic Usage
 
-## Component
+## Create Form View
 
 @todo
 
-## Prototype APIs
+## Directly Manipulate Form Data
 
 With the prototype APIs provided by Formotor, it is very convenient to get and set data from complex forms directly. These methods are very useful even if you don't use a component framework.
 
