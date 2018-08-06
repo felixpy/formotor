@@ -9,8 +9,8 @@ const PROTO_APIS = {
 
 function registryProto (Formotor) {
   // configuration
-  Formotor.getConfig = getConfig
-  Formotor.setConfig = setConfig
+  Formotor.getProtoConfig = getConfig
+  Formotor.setProtoConfig = setConfig
 
   // proto api
   JZ.fn.formotor = function (key) {

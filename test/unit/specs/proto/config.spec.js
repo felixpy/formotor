@@ -2,22 +2,22 @@ import Formotor from 'src/index'
 
 describe('set and get config', () => {
   test('empty options', () => {
-    Formotor.setConfig()
+    Formotor.setProtoConfig()
 
-    expect(Formotor.getConfig().postName).toBe('data-post-name')
+    expect(Formotor.getProtoConfig().postName).toBe('data-post-name')
   })
 
   test('object options', () => {
-    Formotor.setConfig({
+    Formotor.setProtoConfig({
       postName: 'jz-post-name'
     })
 
-    expect(Formotor.getConfig().postName).toBe('jz-post-name')
+    expect(Formotor.getProtoConfig().postName).toBe('jz-post-name')
   })
 
   test('single key', () => {
-    Formotor.setConfig('postName', 'jz-post-name')
+    Formotor.setProtoConfig('postName', 'jz-post-name')
 
-    expect(Formotor.getConfig('postName')).toBe('jz-post-name')
+    expect(Formotor.getProtoConfig('postName')).toBe('jz-post-name')
   })
 })

@@ -51,6 +51,10 @@
     return Object.prototype.toString.apply(value) === '[object Array]';
   }
 
+  function hasKey(target, key) {
+    return Object.prototype.hasOwnProperty.call(target, key);
+  }
+
   function toArray$1(target) {
     var index = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
 
@@ -283,15 +287,24 @@
     var config = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
     var postName = config.postName;
 
+    var getElementByName = function getElementByName(name) {
+      var selector = '[name="' + name + '"],[' + postName + '="' + name + '"]';
+      return JZForm.find(selector).add(JZForm.filter(selector));
+    };
     JZ.each(values, function (name, value) {
       var opt = options[name];
-      var selector = '[name="' + name + '"],[' + postName + '="' + name + '"]';
-      var JZElements = JZForm.find(selector).add(JZForm.filter(selector));
+      var JZElements = getElementByName(name);
 
       if (isFunction(opt)) {
         opt.apply(JZElements, [JZForm, value, values]);
       } else {
         setValue(JZElements, value);
+      }
+    });
+    JZ.each(options, function (name, opt) {
+      var JZElements = getElementByName(name);
+      if (isFunction(opt) && !hasKey(values, name)) {
+        opt.apply(JZElements, [JZForm, null, values]);
       }
     });
   }
@@ -333,8 +346,8 @@
 
   function registryProto(Formotor) {
     // configuration
-    Formotor.getConfig = getConfig;
-    Formotor.setConfig = setConfig;
+    Formotor.getProtoConfig = getConfig;
+    Formotor.setProtoConfig = setConfig;
 
     // proto api
     JZ.fn.formotor = function (key) {

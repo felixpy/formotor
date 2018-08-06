@@ -8,4 +8,5 @@
   * [Prototype APIs](proto.md)
 
 * API Reference
-  * [APIs](refer.md)
+  * [Formotor](api.md)
+  * [Prototype APIs](api-proto.md)
