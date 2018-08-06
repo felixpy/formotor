@@ -1,6 +1,6 @@
 * Quick Start
   * [Introduction](intro.md)
-  * [Basic Usage](usage.md)
+  * [Getting Started](start.md)
 
 * Guide
   * [Component](component.md)

@@ -1,5 +1,5 @@
 import JZ from 'jquery'
-import { toArray, isUndef, isFunction, isArray, includes } from '../util'
+import { toArray, isUndef, isFunction, isArray, includes, hasKey } from '../util'
 import { globalConfig } from './config'
 
 const regs = {
@@ -174,15 +174,24 @@ function renderValueToForm (JZForm, values = {}, options = {}, config = {}) {
   const {
     postName
   } = config
+  const getElementByName = (name) => {
+    const selector = `[name="${name}"],[${postName}="${name}"]`
+    return JZForm.find(selector).add(JZForm.filter(selector))
+  }
   JZ.each(values, function (name, value) {
     const opt = options[name]
-    const selector = `[name="${name}"],[${postName}="${name}"]`
-    const JZElements = JZForm.find(selector).add(JZForm.filter(selector))
+    const JZElements = getElementByName(name)
 
     if (isFunction(opt)) {
       opt.apply(JZElements, [JZForm, value, values])
     } else {
       setValue(JZElements, value)
+    }
+  })
+  JZ.each(options, function (name, opt) {
+    const JZElements = getElementByName(name)
+    if (isFunction(opt) && !hasKey(values, name)) {
+      opt.apply(JZElements, [JZForm, null, values])
     }
   })
 }
