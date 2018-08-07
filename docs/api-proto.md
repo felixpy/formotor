@@ -90,15 +90,73 @@ Modify the following configuration to change the default behavior of Formotor.
 
 ### getProtoConfig(key)
 
+- Arguments:
+  - `{string} key`
+
+- Usage:
+
+  Get the configuration of the specified key..
+
+  ```javascript
+  Formotor.getProtoConfig('ignore')
+  // '.fm-ignore'
+  ```
+
 ### setProtoConfig(config)
 
+- Arguments:
+  - `{object} config`
+
+- Usage:
+
+  Set multiple configurations at the same time.
+
+  ```javascript
+  Formotor.setProtoConfig({
+    ignore: '.my-ignore',
+    disableMode: true
+  })
+  ```
+
 ### setProtoConfig(key, value)
+
+- Arguments:
+  - `{string} key`
+  - `{any} value`
+
+- Usage:
+
+  Set a single configuration item.
+
+  ```javascript
+  Formotor.setProtoConfig('ignore', '.my-ignore')
+  ```
 
 ## Instance Methods
 
 ### getValue()
 
+- Usage:
+
+  Get the value of a single form element (including the checkbox group).
+
+  ```javascript
+  $('[name=a]').formotor('getValue')
+  ```
+
 ### setValue(value)
+
+- Arguments:
+  - `{string|number|array} value`
+
+- Usage:
+
+  Set the value of a single form element (including the checkbox group). If it is a multi-select type of form element, the value can be an array.
+
+  ```javascript
+  $('[name=a][type=text]').formotor('setValue', '1')
+  $('[name=b][type=checkbox]').formotor('setValue', ['1', '2'])
+  ```
 
 ### getValues([options, config])
 
