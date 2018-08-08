@@ -105,7 +105,7 @@ Modify the following configuration to change the default behavior of Formotor.
 ### setProtoConfig(config)
 
 - Arguments:
-  - `{object} config`
+  - `{ [key: string]: any } config`
 
 - Usage:
 
@@ -160,4 +160,81 @@ Modify the following configuration to change the default behavior of Formotor.
 
 ### getValues([options, config])
 
+- Arguments:
+  - `{ [key: string]: function } options`
+  - `{ [key: string]: any } config`
+
+- Usage:
+
+  Get values with optional custom handlers and local configuration.
+
+  Each handler in `options` taking two arguments:
+
+    - `{jquery} $form` - The form that calls the `getValues` method.
+    - `{object} referValues` - Original values that collected by Formotor.
+
+  The `config` parameter is used to override the global configuration, and the supported fields are exactly the same.
+  
+  In addition, `this` will point to the corresponding form element.
+
+  ```javascript
+  const options = {
+    a: function ($form, referValues) {
+      return referValues.a + '@postfix'
+    },
+    b: function ($form, referValues) {
+      return $(this).val() + referValues.c
+    }
+  }
+  const config = {
+    ignore: '.my-ignore'
+  }
+
+  $('form#sample').formotor('getValues', options, config)
+  ```
+
+- See also: [Custom Handlers](/proto?id=custom-handlers), [Global Config](/api-proto?id=global-config)
+
 ### setValues(values[, options, config])
+
+- Arguments:
+  - `{ [key: string]: any } values`
+  - `{ [key: string]: function } options`
+  - `{ [key: string]: any } config`
+    - `{string} postName`
+
+- Usage:
+
+  Set values with optional custom handlers and local configuration.
+
+  Each handler in `options` taking three arguments:
+
+    - `{jquery} $form` - The form that calls the `getValues` method.
+    - `{string|number|array} value` - The value of current form element.
+    - `{object} referValues` - All values of the form.
+
+  The `config` parameter is used to override the global configuration, and the supported fields are exactly the same.
+  
+  In addition, `this` will point to the corresponding form element.
+
+
+  ```javascript
+  const values = {
+    a: 1,
+    b: 2,
+    x: 3
+  }
+  const options = {
+    a: function ($form, value, referValues) {
+      $(this).val(value).attr('data-id', referValues.x)
+    },
+    b: function ($form, value referValues) {
+      $form.find('.some-custom-widget').customWidget('setValue', value)
+    }
+  }
+  const config = {
+    postName: 'data-name'
+  }
+
+  $('form#sample').formotor('setValues', values, options, config)
+  ```
