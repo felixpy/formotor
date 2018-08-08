@@ -238,3 +238,5 @@ Modify the following configuration to change the default behavior of Formotor.
 
   $('form#sample').formotor('setValues', values, options, config)
   ```
+
+- See also: [Custom Handlers](/proto?id=custom-handlers), [Global Config](/api-proto?id=global-config)
