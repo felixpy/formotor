@@ -2,8 +2,8 @@ import Formotor from 'src/index'
 
 describe('formotor init', () => {
   test('init', () => {
-    const fm = new Formotor()
+    const comp = new Formotor()
 
-    expect(fm instanceof Formotor).toBe(true)
+    expect(comp instanceof Formotor).toBe(true)
   })
 })

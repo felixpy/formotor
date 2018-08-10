@@ -2,8 +2,8 @@ import JZ from 'jquery'
 import { isArray } from '../util'
 import { generate } from './generate'
 
-const dirRE = /^fi-|^@/
-const onRE = /^@|^fi-on:/
+const dirRE = /^fm-|^@/
+const onRE = /^@|^fm-on:/
 const argRE = /:(.*)$/
 const modifierRE = /\.[^.]+/g
 

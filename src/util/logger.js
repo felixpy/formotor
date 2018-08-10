@@ -1,6 +1,6 @@
 import { config } from '../global/config'
 
-function warn (msg) {
+function warn (msg = '') {
   if (!config.silent) {
     console.error('[Formotor Warn]: ' + msg)
   }

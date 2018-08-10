@@ -35,7 +35,7 @@ function setValues (el, data, handlers) {
       handlers[name].apply(this, [JZComponent, value, data])
     } else {
       if (value != null) {
-        JZ(this).formit('setValue', value)
+        JZ(this).formotor('setValue', value)
       }
     }
   })
@@ -49,7 +49,7 @@ function getValues (el, options, config) {
     trimText: true
   }, config)
 
-  return JZComponent.formit('getValues', options, config)
+  return JZComponent.formotor('getValues', options, config)
 }
 
 function mergeForm (Formotor) {

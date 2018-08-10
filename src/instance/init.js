@@ -8,7 +8,7 @@ function mergeInit (Formotor) {
   Formotor.prototype._init = function (options = {}) {
     const comp = this
     comp._cid = cid++
-    comp._isFormitComponent = true
+    comp._isFormotorComponent = true
     comp._disabled = false
 
     if (options && options._isSubComponent) {

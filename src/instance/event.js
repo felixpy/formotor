@@ -77,9 +77,9 @@ function mergeEvents (Formotor) {
 
   Formotor.prototype.$trigger = function (event) {
     const comp = this
-    const callbacks = comp._events[event]
+    let callbacks = comp._events[event]
     if (callbacks) {
-      Formotor.prototype.$allbacks = callbacks.length > 1 ? toArray(callbacks) : callbacks
+      callbacks = callbacks.length > 1 ? toArray(callbacks) : callbacks
       const args = Array.prototype.slice.call(arguments, 1)
       for (let i = 0, l = callbacks.length; i < l; i++) {
         callbacks[i].apply(comp, args)

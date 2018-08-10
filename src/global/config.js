@@ -4,7 +4,7 @@ import { isString } from '../util/toolbox'
 const publicConfig = {
   silent: false,
   eventHookRE: /^j-/,
-  disabledClasses: 'formit-component-disabled hidden',
+  disabledClasses: 'fm-component-disabled hidden',
   baseComponent: 'basic'
 }
 

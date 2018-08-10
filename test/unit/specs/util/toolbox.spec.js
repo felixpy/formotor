@@ -70,4 +70,10 @@ describe('shared utils', () => {
 
     expect(utils.toArray(arr)).toEqual([2, 4])
   })
+
+  test('is private', () => {
+    expect(utils.isPrivateAttr('_foo')).toBeTruthy()
+    expect(utils.isPrivateAttr('__foo')).toBeTruthy()
+    expect(utils.isPrivateAttr('foo')).toBeFalsy()
+  })
 })
