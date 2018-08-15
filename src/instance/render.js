@@ -47,7 +47,7 @@ function mergeRender (Formotor) {
     return comp
   }
 
-  Formotor.prototype._executeNode = function (node, data) {
+  Formotor.prototype._excuteNode = function (node, data) {
     const comp = this
 
     if (data.directives && data.directives.length) {

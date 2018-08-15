@@ -202,11 +202,16 @@ describe('set and get form values', () => {
     const JZForm = JZ(`
       <form>
         <input type="text" name="alfa">
+        <input type="text" name="bravo">
       </form>
     `)
     const options = {
       'alfa': function (JZForm, value, values) {
-        return JZ(this).val(value).attr('data-id', values.alfaId)
+        JZ(this).val(value).attr('data-id', values.alfaId)
+      },
+      // without value
+      'bravo': function (JZForm, value) {
+        JZ(this).val('2050')
       }
     }
 
@@ -216,6 +221,7 @@ describe('set and get form values', () => {
     }, options)
 
     expect(JZForm.formotor('getValues').alfa).toEqual('2018')
+    expect(JZForm.formotor('getValues').bravo).toEqual('2050')
     expect(JZForm.find('[name=alfa]').attr('data-id')).toBe('100')
   })
 
