@@ -13,13 +13,13 @@ The full documentation is [here](https://felixpy.github.io/formotor).
 
 It contains several parts:
 
-  - [Quick Start](https://felixpy.github.io/formotor/#/intro)
-  - [Guide](https://felixpy.github.io/formotor/#/component)
-  - [API Reference](https://felixpy.github.io/formotor/#/api)
+- [Quick Start](https://felixpy.github.io/formotor/#/intro)
+- [Guide](https://felixpy.github.io/formotor/#/component)
+- [API Reference](https://felixpy.github.io/formotor/#/api)
 
 ### Translation
 
-  - [:cn: Chinese Simplified](https://felixpy.github.io/formotor/#/zh-cn)
+- [:cn: Chinese Simplified](https://felixpy.github.io/formotor/#/zh-cn)
 
 ## License
 
