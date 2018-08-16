@@ -1,38 +1,38 @@
-import JZ from 'jquery'
-import { isString } from '../util/toolbox'
+import { isString, isPrivateAttr, isObject } from '../util/toolbox'
 
-const publicConfig = {
+const config = {
+  // public config
   silent: false,
   eventHookRE: /^j-/,
   disabledClasses: 'fm-component-disabled hidden',
-  baseComponent: 'basic'
-}
+  baseComponent: 'basic',
 
-const privateConfig = {
+  // private config
   _eventSeparator: '|',
   _assetsType: ['component', 'directive'],
   _lifecycleHooks: ['init', 'ready']
 }
 
-const formotorConfig = JZ.extend(privateConfig, publicConfig)
-
-function getConfig (key) {
-  if (isString(key)) {
-    return publicConfig[key]
+function configure (opt, value = null) {
+  if (isString(opt) && isPrivateAttr(opt)) {
+    return
   }
-  return JZ.extend(true, {}, publicConfig)
-}
 
-function setConfig (firstArg = {}, secondArg = null) {
-  if (isString(firstArg)) {
-    publicConfig[firstArg] = secondArg
+  if (isObject(opt)) {
+    Object.keys(opt).forEach(key => {
+      configure(key, opt[key])
+    })
+  } else if (isString(opt)) {
+    if (value) {
+      config[opt] = value
+    } else {
+      return config[opt]
+    }
   }
-  JZ.extend(true, publicConfig, firstArg)
 }
 
 export {
-  setConfig,
-  getConfig,
+  config,
 
-  formotorConfig as config
+  configure
 }
