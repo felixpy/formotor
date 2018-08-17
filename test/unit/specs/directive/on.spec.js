@@ -11,9 +11,9 @@ describe('fm-on directive', () => {
   test('bind', () => {
     JZ('.wrapper').append(`
       <div fm-app>
-        <div id="foo" fm-on:click.alfa="doSomeThing" fm-on:click.bravo="wave"></div>
+        <div id="foo" fm-on:click.alfa="doSomeThing" fm-on:click.bravo="doSomeThingElse"></div>
         <div id="bar" fm-on:click="doSomeThing"></div>
-        <div id="zoo" fm-on:click.alfa="doSomeThing" fm-on:click.bravo="wave" fm-on:click.charlie="wave"></div>
+        <div id="zoo" fm-on:click.alfa="doSomeThing" fm-on:click.bravo="doSomeThingElse" fm-on:click.charlie="doSomeThingElse"></div>
       </div>
     `)
     const comp = new Formotor({
@@ -27,7 +27,7 @@ describe('fm-on directive', () => {
 
           expect($event.type).toBe('click')
         },
-        wave () {
+        doSomeThingElse () {
           this.x = this.x + 7
         }
       }
@@ -193,5 +193,28 @@ describe('fm-on directive', () => {
     }))
 
     expect(comp.x).toBe(1)
+  })
+
+  test('handler not exist', () => {
+    JZ('.wrapper').append(`
+      <div fm-app>
+        <div class="j-foo" fm-on:click="abc def"></div>
+      </div>
+    `)
+    const comp = new Formotor({
+      el: '[fm-app]',
+      data: {
+        x: 0
+      },
+      methods: {
+        doSomeThingElse () {
+          this.x = this.x + 1
+        }
+      }
+    })
+
+    comp.$find('.j-foo').trigger('click')
+
+    expect(comp.x).toBe(0)
   })
 })
