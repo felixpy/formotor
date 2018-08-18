@@ -29,6 +29,27 @@ describe('directive features', () => {
     expect(comp.x).toBe(1)
   })
 
+  test('empty value', () => {
+    JZ('.wrapper').append(`
+      <div fm-app>
+        <div fm-foo></div>
+      </div>
+    `)
+    Formotor.directive('foo', {
+      bind (el, bindings, comp) {
+        comp.x = 20
+      }
+    })
+    const comp = new Formotor({
+      el: '[fm-app]',
+      data: {
+        x: 0
+      }
+    })
+
+    expect(comp.x).toBe(20)
+  })
+
   test('args', () => {
     JZ('.wrapper').append(`
       <div fm-app>

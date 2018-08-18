@@ -46,6 +46,56 @@ describe('fm-on directive', () => {
     expect(comp.x).toBe(30)
   })
 
+  test('shorthand', () => {
+    JZ('.wrapper').append(`
+      <div fm-app>
+        <div class="j-foo" @click="doSomeThing"></div>
+      </div>
+    `)
+    const comp = new Formotor({
+      el: '[fm-app]',
+      data: {
+        x: 0
+      },
+      methods: {
+        doSomeThing () {
+          this.x = this.x + 1
+        }
+      }
+    })
+
+    comp.$find('.j-foo').trigger('click')
+
+    expect(comp.x).toBe(1)
+  })
+
+  test('statement', () => {
+    JZ('.wrapper').append(`
+      <div fm-app>
+        <div class="j-foo" @click="doSomeThing(5, 8, $event)"></div>
+      </div>
+    `)
+    const comp = new Formotor({
+      el: '[fm-app]',
+      data: {
+        x: 0,
+        y: 0
+      },
+      methods: {
+        doSomeThing (x, y, $event) {
+          this.x = x
+          this.y = y
+          expect($event.type).toBe('click')
+        }
+      }
+    })
+
+    comp.$find('.j-foo').trigger('click')
+
+    expect(comp.x).toBe(5)
+    expect(comp.y).toBe(8)
+  })
+
   test('proxy', () => {
     JZ('.wrapper').append(`
       <div fm-app>
@@ -167,17 +217,22 @@ describe('fm-on directive', () => {
   test('modifier keycode', () => {
     JZ('.wrapper').append(`
       <div fm-app>
-        <input type="text" class="j-foo" fm-on:keyup.left="doSomeThing"
+        <input type="text" class="j-foo" fm-on:keyup.left="doSomeThing" />
+        <input type="text" class="j-bar" fm-on:keyup.delete="doSomeThingElse" />
       </div>
     `)
     const comp = new Formotor({
       el: '[fm-app]',
       data: {
-        x: 0
+        x: 0,
+        y: 0
       },
       methods: {
-        doSomeThing ($event) {
+        doSomeThing () {
           this.x = this.x + 1
+        },
+        doSomeThingElse () {
+          this.y = this.y - 1
         }
       }
     })
@@ -193,27 +248,36 @@ describe('fm-on directive', () => {
     }))
 
     expect(comp.x).toBe(1)
+
+    comp.$find('.j-bar').trigger(JZ.Event('keyup', {
+      keyCode: 9
+    }))
+
+    expect(comp.y).toBe(0)
+
+    comp.$find('.j-bar').trigger(JZ.Event('keyup', {
+      keyCode: 8
+    }))
+
+    expect(comp.y).toBe(-1)
   })
 
   test('handler not exist', () => {
     JZ('.wrapper').append(`
       <div fm-app>
         <div class="j-foo" fm-on:click="abc def"></div>
+        <div class="j-bar" fm-on:click.xyz></div>
       </div>
     `)
     const comp = new Formotor({
       el: '[fm-app]',
       data: {
         x: 0
-      },
-      methods: {
-        doSomeThingElse () {
-          this.x = this.x + 1
-        }
       }
     })
 
     comp.$find('.j-foo').trigger('click')
+    comp.$find('.j-bar').trigger('click')
 
     expect(comp.x).toBe(0)
   })
