@@ -4,6 +4,12 @@
  */
 import JZ from 'jquery';
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+  return typeof obj;
+} : function (obj) {
+  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+};
+
 var _extends = Object.assign || function (target) {
   for (var i = 1; i < arguments.length; i++) {
     var source = arguments[i];
@@ -20,6 +26,10 @@ var _extends = Object.assign || function (target) {
 
 function includes(target, value) {
   return Array.prototype.indexOf.call(target, value) !== -1;
+}
+
+function isObject(value) {
+  return value !== null && (typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object';
 }
 
 function isUndef(value) {
@@ -53,40 +63,43 @@ function isPrivateAttr(key) {
   );
 }
 
-var publicConfig = {
+var config = {
+  // public config
   silent: false,
   eventHookRE: /^j-/,
-  disabledClasses: 'formit-component-disabled hidden',
-  baseComponent: 'basic'
-};
+  disabledClasses: 'fm-component-disabled hidden',
+  baseComponent: 'basic',
 
-var privateConfig = {
+  // private config
   _eventSeparator: '|',
   _assetsType: ['component', 'directive'],
   _lifecycleHooks: ['init', 'ready']
 };
 
-var formotorConfig = JZ.extend(privateConfig, publicConfig);
+function configure(opt) {
+  var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
-function getConfig(key) {
-  if (isString(key)) {
-    return publicConfig[key];
+  if (isString(opt) && isPrivateAttr(opt)) {
+    return;
   }
-  return JZ.extend(true, {}, publicConfig);
+
+  if (isObject(opt)) {
+    Object.keys(opt).forEach(function (key) {
+      configure(key, opt[key]);
+    });
+  } else if (isString(opt)) {
+    if (value) {
+      config[opt] = value;
+    } else {
+      return config[opt];
+    }
+  }
 }
 
-function setConfig() {
-  var firstArg = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var secondArg = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+function warn() {
+  var msg = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
 
-  if (isString(firstArg)) {
-    publicConfig[firstArg] = secondArg;
-  }
-  JZ.extend(true, publicConfig, firstArg);
-}
-
-function warn(msg) {
-  if (!formotorConfig.silent) {
+  if (!config.silent) {
     console.error('[Formotor Warn]: ' + msg);
   }
 }
@@ -113,7 +126,7 @@ function resolveAsset(options, type, name) {
 }
 
 function mergeOptions(parent, child) {
-  formotorConfig._assetsType.forEach(function (type) {
+  config._assetsType.forEach(function (type) {
     var childAssets = child[type + 's'] || (child[type + 's'] = {});
     var parentAssets = parent[type + 's'];
 
@@ -141,7 +154,7 @@ function mergeLifecycle(Formotor) {
   Formotor.prototype._initHooks = function () {
     var comp = this;
 
-    formotorConfig._lifecycleHooks.forEach(function (hook) {
+    config._lifecycleHooks.forEach(function (hook) {
       var hooks = comp.$options[hook] || [];
       comp.$options[hook] = isArray(hooks) ? hooks : [hooks];
     });
@@ -158,7 +171,7 @@ function mergeInit(Formotor) {
 
     var comp = this;
     comp._cid = cid++;
-    comp._isFormitComponent = true;
+    comp._isFormotorComponent = true;
     comp._disabled = false;
 
     if (options && options._isSubComponent) {
@@ -242,7 +255,7 @@ function getEventHookClass(el) {
   var hookClass = '';
   var classList = el.className.split(' ');
   classList.forEach(function (cl) {
-    if (formotorConfig.eventHookRE.test(cl)) {
+    if (config.eventHookRE.test(cl)) {
       hookClass += '.' + cl;
     }
   });
@@ -251,7 +264,7 @@ function getEventHookClass(el) {
 
 function applyEvent(component, node, eventName, method) {
   var hookClass = getEventHookClass(node.el);
-  var hookEvent = eventName.split(formotorConfig._eventSeparator).join(' ');
+  var hookEvent = eventName.split(config._eventSeparator).join(' ');
   if (!isArray(method)) {
     method = [method];
   }
@@ -267,7 +280,7 @@ function applyEvent(component, node, eventName, method) {
 
 function proxyEvent(component, eventName, hookClass, method) {
   var proxyEvents = component._proxyEvents || (component._proxyEvents = []);
-  var hookEvent = eventName.split(formotorConfig._eventSeparator).join(' ');
+  var hookEvent = eventName.split(config._eventSeparator).join(' ');
   var bound = false;
 
   proxyEvents.forEach(function (p) {
@@ -351,21 +364,21 @@ function setValues(el, data, handlers) {
       handlers[name].apply(this, [JZComponent, value, data]);
     } else {
       if (value != null) {
-        JZ(this).formit('setValue', value);
+        JZ(this).formotor('setValue', value);
       }
     }
   });
 }
 
-function getValues(el, options, config) {
+function getValues(el, options, config$$1) {
   var JZComponent = JZ(el);
 
   options = JZ.extend({}, options);
-  config = JZ.extend({
+  config$$1 = JZ.extend({
     trimText: true
-  }, config);
+  }, config$$1);
 
-  return JZComponent.formit('getValues', options, config);
+  return JZComponent.formotor('getValues', options, config$$1);
 }
 
 function mergeForm(Formotor) {
@@ -430,10 +443,10 @@ function mergeForm(Formotor) {
     return comp;
   };
 
-  Formotor.prototype.$getValues = function (options, config) {
+  Formotor.prototype.$getValues = function (options, config$$1) {
     var comp = this;
 
-    return getValues(comp.$el, options, config);
+    return getValues(comp.$el, options, config$$1);
   };
 
   Formotor.prototype.$provideRef = function () {
@@ -478,9 +491,9 @@ function mergeForm(Formotor) {
 
     comp._disabled = !!status;
     if (comp._disabled) {
-      comp.$el.addClass(formotorConfig.disabledClasses);
+      comp.$el.addClass(config.disabledClasses);
     } else {
-      comp.$el.removeClass(formotorConfig.disabledClasses);
+      comp.$el.removeClass(config.disabledClasses);
     }
 
     return comp;
@@ -590,7 +603,7 @@ function mergeEvents(Formotor) {
     var comp = this;
     var callbacks = comp._events[event];
     if (callbacks) {
-      Formotor.prototype.$allbacks = callbacks.length > 1 ? toArray$1(callbacks) : callbacks;
+      callbacks = callbacks.length > 1 ? toArray$1(callbacks) : callbacks;
       var args = Array.prototype.slice.call(arguments, 1);
       for (var i = 0, l = callbacks.length; i < l; i++) {
         callbacks[i].apply(comp, args);
@@ -664,7 +677,7 @@ function genHandler(handler) {
     self: 'if($event.target !== $event.currentTarget)return;'
   };
 
-  if (!handler) {
+  if (!handler || !isArray(handler) && !handler.value) {
     return 'function(){}';
   } else if (isArray(handler)) {
     return '[' + handler.map(genHandler).join(',') + ']';
@@ -707,8 +720,8 @@ function genKeyFilter(key) {
   }
 }
 
-var dirRE = /^fi-|^@/;
-var onRE = /^@|^fi-on:/;
+var dirRE = /^fm-|^@/;
+var onRE = /^@|^fm-on:/;
 var argRE = /:(.*)$/;
 var modifierRE = /\.[^.]+/g;
 
@@ -853,7 +866,7 @@ function createSubComponent(Formotor, comp, sub) {
   var options = void 0;
 
   if (!asset) {
-    asset = resolveAsset(comp.$options, 'component', formotorConfig.baseComponent);
+    asset = resolveAsset(comp.$options, 'component', config.baseComponent);
   }
   options = JZ.extend(true, {
     el: sub.el,
@@ -883,7 +896,7 @@ function mergeRender(Formotor) {
     return comp;
   };
 
-  Formotor.prototype._executeNode = function (node, data) {
+  Formotor.prototype._excuteNode = function (node, data) {
     var comp = this;
 
     if (data.directives && data.directives.length) {
@@ -952,11 +965,11 @@ function extend(source, dest, deep) {
 
 function initAssetRegisters(Formotor) {
   Formotor.options = {};
-  formotorConfig._assetsType.forEach(function (type) {
+  config._assetsType.forEach(function (type) {
     Formotor.options[type + 's'] = {};
   });
 
-  formotorConfig._assetsType.forEach(function (type) {
+  config._assetsType.forEach(function (type) {
     Formotor[type] = function (id, def) {
       if (!def) {
         return this.options[type + 's'][id];
@@ -974,8 +987,7 @@ function registryGlobalAPI(Formotor) {
   Formotor.JZ = JZ;
 
   Formotor.extend = extend;
-  Formotor.setConfig = setConfig;
-  Formotor.getConfig = getConfig;
+  Formotor.config = configure;
 
   initAssetRegisters(Formotor);
 }
@@ -1005,14 +1017,14 @@ var globalConfig = {
   }
 };
 
-function getConfig$1(key) {
+function getConfig(key) {
   if (isString(key)) {
     return globalConfig[key];
   }
   return JZ.extend(true, {}, globalConfig);
 }
 
-function setConfig$1() {
+function setConfig() {
   var firstArg = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var secondArg = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
@@ -1265,8 +1277,8 @@ var PROTO_APIS = _extends({}, valueProtoAPI);
 
 function registryProto(Formotor) {
   // configuration
-  Formotor.getProtoConfig = getConfig$1;
-  Formotor.setProtoConfig = setConfig$1;
+  Formotor.getProtoConfig = getConfig;
+  Formotor.setProtoConfig = setConfig;
 
   // proto api
   JZ.fn.formotor = function (key) {
