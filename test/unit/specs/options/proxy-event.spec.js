@@ -2,7 +2,7 @@ import Formotor from 'src/index'
 
 const JZ = Formotor.JZ
 
-describe('formotor jquery/zepto event options', () => {
+describe('jquery/zepto event options', () => {
   JZ('<div class="wrapper"></div>').appendTo('body')
   beforeEach(() => {
     JZ('.wrapper').empty().append(`

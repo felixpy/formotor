@@ -1,6 +1,6 @@
 import Formotor from 'src/index'
 
-describe('set and get config', () => {
+describe('set and get formotor global config', () => {
   test('empty options', () => {
     expect(Formotor.config()).toBeUndefined()
   })

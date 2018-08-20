@@ -38,7 +38,7 @@ function proxyEvent (component, eventName, hookClass, method) {
   let bound = false
 
   proxyEvents.forEach(function (p) {
-    if (p.e === eventName && p.hook === hookClass && p.fn === method) {
+    if (p.e === eventName && p.hook === hookClass && p.fn.toString() === method.toString()) {
       warn('proxy event repeated, name: ' + eventName + ', hookClass: ' + hookClass)
       bound = true
     }

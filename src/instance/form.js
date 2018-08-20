@@ -8,7 +8,7 @@ function setValues (el, data, handlers) {
   let nameMap = {}
   let currentName
 
-  if (!data) {
+  if (!data || !Object.keys(data).length) {
     return
   }
   handlers = handlers || {}

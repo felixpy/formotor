@@ -69,6 +69,29 @@ describe('fm-on directive', () => {
     expect(comp.x).toBe(1)
   })
 
+  test('repeated', () => {
+    JZ('.wrapper').append(`
+      <div fm-app>
+        <div class="j-foo" @click.foo="doSomeThing" @click.bar="doSomeThing"></div>
+      </div>
+    `)
+    const comp = new Formotor({
+      el: '[fm-app]',
+      data: {
+        x: 0
+      },
+      methods: {
+        doSomeThing () {
+          this.x = this.x + 1
+        }
+      }
+    })
+
+    comp.$find('.j-foo').trigger('click')
+
+    expect(comp.x).toBe(1)
+  })
+
   test('statement', () => {
     JZ('.wrapper').append(`
       <div fm-app>
