@@ -53,7 +53,7 @@ function genHandler (handler) {
     self: 'if($event.target !== $event.currentTarget)return;'
   }
 
-  if (!handler) {
+  if (!handler || (!isArray(handler) && !handler.value)) {
     return 'function(){}'
   } else if (isArray(handler)) {
     return '[' + handler.map(genHandler).join(',') + ']'
