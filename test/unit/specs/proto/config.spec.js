@@ -1,6 +1,6 @@
 import Formotor from 'src/index'
 
-describe('set and get config', () => {
+describe('set and get global config of prototype apis', () => {
   test('empty options', () => {
     Formotor.setProtoConfig()
 

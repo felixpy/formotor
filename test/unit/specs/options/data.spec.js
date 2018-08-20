@@ -2,7 +2,7 @@ import Formotor from 'src/index'
 
 const JZ = Formotor.JZ
 
-describe('formotor data options', () => {
+describe('data options', () => {
   JZ('<div class="wrapper"></div>').appendTo('body')
   beforeEach(() => {
     JZ('.wrapper').empty().append(`

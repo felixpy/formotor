@@ -284,7 +284,7 @@ function proxyEvent(component, eventName, hookClass, method) {
   var bound = false;
 
   proxyEvents.forEach(function (p) {
-    if (p.e === eventName && p.hook === hookClass && p.fn === method) {
+    if (p.e === eventName && p.hook === hookClass && p.fn.toString() === method.toString()) {
       warn('proxy event repeated, name: ' + eventName + ', hookClass: ' + hookClass);
       bound = true;
     }
@@ -337,7 +337,7 @@ function setValues(el, data, handlers) {
   var nameMap = {};
   var currentName = void 0;
 
-  if (!data) {
+  if (!data || !Object.keys(data).length) {
     return;
   }
   handlers = handlers || {};
