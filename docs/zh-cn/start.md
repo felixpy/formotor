@@ -2,7 +2,82 @@
 
 ## 创建表单视图
 
-@todo
+下面通过一个简单的演示一下 `Formotor` 组件系统的基本使用方法。
+
+```html
+<!-- HTML 模板 -->
+<div fm-app>
+    <div fm-component="foo">
+        <input type="text" name="book" @change="printValue" />
+    </div>
+    <div fm-component="bar">
+        <div fm-greet="2 + 3"></div>
+        <div class="j-bar-content">Bar Content Here</div>
+    </div>
+</div>
+```
+
+```js
+// 使用全局 API 注册 foo 组件
+Formotor.component('foo', {
+    ready: function() {
+        console.log('Foo is ready now!');
+    },
+    methods: {
+        printValue: function(e) {
+            console.log(e.target.value);
+        }
+    }
+});
+
+var comp = new Formotor({
+    el: '[fm-app]',
+    ready: function() {
+        console.log('Everything is ready now!');
+    },
+    directives: {
+        greet: function(el, bindings, comp) {
+            console.log('Greet:', bindings.value);
+        }
+    },
+    components: {
+        bar: {
+            data: {
+                msg: function() {
+                    return {
+                        hello: 'Hello by Bar!'
+                    };
+                }
+            },
+            proxies: {
+                'click .j-bar-content': 'doSomething'
+            },
+            ready: function() {
+                console.log('Bar is ready now!');
+            },
+            methods: {
+                doSomething: function() {
+                    console.log(this.msg.hello);
+                }
+            }
+        }
+    },
+});
+```
+
+在上面的例子中，包含了组件、指令、事件绑定等常用功能。你可以在浏览器中运行该例子，观察控制台信息，可以看到以下结果：
+
+```bash
+# 直接运行
+Foo is ready now!
+Greet: 5
+Bar is ready now!
+Everything is ready now!
+# 改变输入框的值为 Hey
+Hey
+# 点击 div.j-bar-content
+Hello by Bar!
+```
 
 ## 直接操作表单数据
 
