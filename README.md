@@ -19,7 +19,7 @@ It contains several parts:
 
 ### Translation
 
-- [:cn: Chinese Simplified](https://felixpy.github.io/formotor/#/zh-cn)
+- [:cn: Chinese Simplified](https://felixpy.github.io/formotor/#/zh-cn/)
 
 ## License
 
