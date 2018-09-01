@@ -135,7 +135,7 @@ console.log(comp.greet); // hello
 
 #### 模型
 
-通过`data`选项，还可以设置一个特殊的数据`model`，该数据将作为调用组件`$set`方法时的依赖。若子组件为指定`model`，则将自动继承父组件的`model`。
+通过`data`选项，还可以设置一个特殊的数据`model`，该数据将作为调用组件`$set`方法时的依赖。若子组件未指定`model`，则将自动继承父组件的`model`。
 
 ```js
 new Formotor({
