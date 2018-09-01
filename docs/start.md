@@ -2,7 +2,82 @@
 
 ## Create Form View
 
-@todo
+Let's take a simple example to demonstrate the basic use of the `Formotor` component system.
+
+```html
+<!-- HTML Template -->
+<div fm-app>
+    <div fm-component="foo">
+        <input type="text" name="book" @change="printValue" />
+    </div>
+    <div fm-component="bar">
+        <div fm-greet="2 + 3"></div>
+        <div class="j-bar-content">Bar Content Here</div>
+    </div>
+</div>
+```
+
+```js
+// Register the foo component with the global API
+Formotor.component('foo', {
+    ready: function() {
+        console.log('Foo is ready now!');
+    },
+    methods: {
+        printValue: function(e) {
+            console.log(e.target.value);
+        }
+    }
+});
+
+var comp = new Formotor({
+    el: '[fm-app]',
+    ready: function() {
+        console.log('Everything is ready now!');
+    },
+    directives: {
+        greet: function(el, bindings, comp) {
+            console.log('Greet:', bindings.value);
+        }
+    },
+    components: {
+        bar: {
+            data: {
+                msg: function() {
+                    return {
+                        hello: 'Hello by Bar!'
+                    };
+                }
+            },
+            proxies: {
+                'click .j-bar-content': 'doSomething'
+            },
+            ready: function() {
+                console.log('Bar is ready now!');
+            },
+            methods: {
+                doSomething: function() {
+                    console.log(this.msg.hello);
+                }
+            }
+        }
+    },
+});
+```
+
+In the above example, it contains general features such as components, directives, and event bindings. You can run the example in a browser, observe the console information, and you can see the following results:
+
+```bash
+# first run
+Foo is ready now!
+Greet: 5
+Bar is ready now!
+Everything is ready now!
+# change the input value to "Hey"
+Hey
+# click `div.j-bar-content`
+Hello by Bar!
+```
 
 ## Directly Manipulate Form Data
 
