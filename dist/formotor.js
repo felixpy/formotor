@@ -1,5 +1,5 @@
 /**
- * Formotor.js v1.0.0-alpha.1
+ * Formotor.js v1.0.0-alpha.2
  * (c) 2018 Felix Yang
  */
 (function (global, factory) {
@@ -1306,7 +1306,7 @@
   registryProto(Formotor);
   registryGlobalAPI(Formotor);
 
-  Formotor.version = '1.0.0-alpha.1';
+  Formotor.version = '1.0.0-alpha.2';
 
   return Formotor;
 
