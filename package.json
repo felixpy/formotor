@@ -1,6 +1,6 @@
 {
   "name": "formotor",
-  "version": "0.1.0",
+  "version": "1.0.0-alpha.1",
   "description": "A lightweight jquery/zepto component framework for forms inspired by vue.js.",
   "main": "dist/formotor.js",
   "module": "dist/formotor.esm.js",
