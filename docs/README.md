@@ -9,6 +9,8 @@ A lightweight jquery/zepto component framework for forms inspired by vue.js.
 
 ## Example
 
+Below is a TodoMVC example that built with formotor.js component system and traditional MVC mode.
+
 <iframe width="100%" height="650" src="//jsfiddle.net/felixpy/x28rdemc/embedded/result,js,html/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
 
 ## License

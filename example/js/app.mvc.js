@@ -101,7 +101,7 @@ jQuery(function($) {
         })
       },
 
-      getTodoById (id) {
+      getTodoById: function (id) {
         return this.data.todos.find(function (todo) {
           return todo.id === id
         })

@@ -52,7 +52,7 @@ jQuery(function($) {
             this.bindEvents()
           },
 
-          bindEvents () {
+          bindEvents: function () {
             this.$el.on('keyup', '.new-todo', this.create)
 
             this.$listen('tree:render', this.render)
@@ -204,7 +204,7 @@ jQuery(function($) {
             this.bindEvents()
           },
 
-          bindEvents () {
+          bindEvents: function () {
             this.$el.on('click', '.clear-completed', this.destroyCompleted)
 
             this.$listen('tree:render', this.render)
@@ -306,7 +306,7 @@ jQuery(function($) {
         })
       },
 
-      getTodoById (id) {
+      getTodoById: function (id) {
         return this.data.todos.find(function (todo) {
           return todo.id === id
         })
@@ -390,7 +390,7 @@ jQuery(function($) {
         this.formotorTree.$broadcast('tree:render')
       },
 
-      createFormotorTree () {
+      createFormotorTree: function () {
         var self = this
 
         /** @member {Formotor} */

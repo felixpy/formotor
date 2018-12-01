@@ -9,6 +9,8 @@
 
 ## 示例
 
+下面是一个由 Formotor 组件系统结合传统 MVC 模式的 TodoMVC 例子。
+
 <iframe width="100%" height="650" src="//jsfiddle.net/felixpy/x28rdemc/embedded/result,js,html/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
 
 ## 许可
