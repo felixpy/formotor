@@ -12,21 +12,19 @@
 
 ```js
 Formotor.component('example', {
-    // options
+  // options
 });
 ```
 
 组件注册之后，就可以在 HTML 中使用该组件：
 
 ```html
-<div fm-app>
-    <div fm-component="example"></div>
-</div>
+<div fm-app><div fm-component="example"></div></div>
 ```
 
 ```js
 new Formotor({
-    el: '[fm-app]'
+  el: '[fm-app]'
 });
 ```
 
@@ -34,7 +32,7 @@ new Formotor({
 
 ```js
 Formotor.component('basic', {
-    // options of basic component
+  // options of basic component
 });
 ```
 
@@ -44,13 +42,13 @@ Formotor.component('basic', {
 
 ```js
 new Formotor({
-    el: '[fm-app]',
-    components: {
-        // 注册 example 组件
-        'example': {
-            // options
-        }
+  el: '[fm-app]',
+  components: {
+    // 注册 example 组件
+    example: {
+      // options
     }
+  }
 });
 ```
 
@@ -58,22 +56,20 @@ new Formotor({
 
 #### 元素
 
-根组件的构造器需要通过`el`选项指定依附的DOM节点。
+根组件的构造器需要通过`el`选项指定依附的 DOM 节点。
 
 ```html
-<div fm-app id="app">
-    <div fm-component="content"></div>
-</div>
+<div fm-app id="app"><div fm-component="content"></div></div>
 ```
 
 ```js
 // 注册content组件
 Formotor.component('content', {
-    // options，不需要指定 el 选项
+  // options，不需要指定 el 选项
 });
 // 通过指定的元素生成组件树
 var comp = new Formotor({
-    el: '[fm-app]' // 也可以使用 '#app'
+  el: '[fm-app]' // 也可以使用 '#app'
 });
 ```
 
@@ -84,13 +80,13 @@ var comp = new Formotor({
 ```js
 // data.foo 是一个对象直接量
 var comp = new Formotor({
-    el: '[fm-app]',
-    data: {
-        foo: {
-            bar: 1
-        },
-        greet: 'hello'
-    }
+  el: '[fm-app]',
+  data: {
+    foo: {
+      bar: 1
+    },
+    greet: 'hello'
+  }
 });
 ```
 
@@ -98,15 +94,15 @@ var comp = new Formotor({
 
 ```js
 var comp = new Formotor({
-    el: '[fm-app]',
-    data: {
-        foo: function() {
-            return {
-                bar: 1
-            };
-        },
-        greet: 'hello'
-    }
+  el: '[fm-app]',
+  data: {
+    foo: function() {
+      return {
+        bar: 1
+      };
+    },
+    greet: 'hello'
+  }
 });
 ```
 
@@ -114,15 +110,15 @@ var comp = new Formotor({
 
 ```js
 var comp = new Formotor({
-    el: '[fm-app]',
-    data: function() {
-        return {
-            foo: {
-                bar: 1
-            },
-            greet: 'hello'
-        };
-    }
+  el: '[fm-app]',
+  data: function() {
+    return {
+      foo: {
+        bar: 1
+      },
+      greet: 'hello'
+    };
+  }
 });
 ```
 
@@ -139,22 +135,22 @@ console.log(comp.greet); // hello
 
 ```js
 new Formotor({
-    el: '[fm-app]',
-    data: {
-        model: function() {
-            return {
-                foo: 1,
-                bar: 2
-            };
-        }
-    },
-    components: {
-        bar: {
-            ready: function() {
-                console.log(this.model.foo, this.model.bar);
-            }
-        }
+  el: '[fm-app]',
+  data: {
+    model: function() {
+      return {
+        foo: 1,
+        bar: 2
+      };
     }
+  },
+  components: {
+    bar: {
+      ready: function() {
+        console.log(this.model.foo, this.model.bar);
+      }
+    }
+  }
 });
 
 // 1 2
@@ -166,16 +162,16 @@ new Formotor({
 
 ```js
 var comp = new Formotor({
-    el: '[fm-app]',
-    methods: {
-        greet: function() {
-            console.log('Say Hello!');
-            this.cheer('Nice Day!');
-        },
-        cheer: function(msg) {
-            console.log(msg);
-        }
+  el: '[fm-app]',
+  methods: {
+    greet: function() {
+      console.log('Say Hello!');
+      this.cheer('Nice Day!');
+    },
+    cheer: function(msg) {
+      console.log(msg);
     }
+  }
 });
 
 comp.greet();
@@ -189,31 +185,33 @@ comp.greet();
 
 ```html
 <div fm-app>
-    <div fm-component="foo">
-        <div class="j-content">Content: Click Here</div>
-        <div class="j-content">Another Content: Click Here</div>
-        <div class="j-footer" @click="greet($event, 'By Footer!');">Footer: Click Here</div>
-        <div class="j-footer">Another Footer: Click Here</div>
+  <div fm-component="foo">
+    <div class="j-content">Content: Click Here</div>
+    <div class="j-content">Another Content: Click Here</div>
+    <div class="j-footer" @click="greet($event, 'By Footer!');">
+      Footer: Click Here
     </div>
+    <div class="j-footer">Another Footer: Click Here</div>
+  </div>
 </div>
 ```
 
 ```js
 var comp = new Formotor({
-    el: '[fm-app]',
-    components: {
-        'foo': {
-            proxies: {
-                'click .j-content': 'greet'
-            },
-            methods: {
-                greet: function(event, msg) {
-                    msg = msg || '';
-                    console.log('Say Hello!' + msg);
-                }
-            }
+  el: '[fm-app]',
+  components: {
+    foo: {
+      proxies: {
+        'click .j-content': 'greet'
+      },
+      methods: {
+        greet: function(event, msg) {
+          msg = msg || '';
+          console.log('Say Hello!' + msg);
         }
+      }
     }
+  }
 });
 
 // 点击任意 div.j-content > Say Hello!
@@ -224,7 +222,7 @@ var comp = new Formotor({
 
 ```js
 comp.$el.on('click', '.j-footer', function(e) {
-    comp.greet(e, 'By Footer');
+  comp.greet(e, 'By Footer');
 });
 ```
 
@@ -234,18 +232,18 @@ comp.$el.on('click', '.j-footer', function(e) {
 
 ```js
 var comp = new Formotor({
-    el: '[fm-app]',
-    events: {
-        'act:smile': 'smile'
+  el: '[fm-app]',
+  events: {
+    'act:smile': 'smile'
+  },
+  methods: {
+    smile: function(msg) {
+      console.log('Smile:', msg);
     },
-    methods: {
-        smile: function(msg) {
-            console.log('Smile:', msg);
-        },
-        cry: function(msg) {
-            console.log('Cry:', msg);
-        }
+    cry: function(msg) {
+      console.log('Cry:', msg);
     }
+  }
 });
 comp.$on('act:cry', comp.cry);
 
@@ -265,40 +263,38 @@ comp.$trigger('act:cry', '55555'); // Cry: 55555
 
 ```html
 <div fm-app>
-    <div fm-component="foo">
-        <input type="text" name="status" @change="updateStatus"/>
-    </div>
-    <div fm-component="bar">
-        <div class="j-status"></div>
-    </div>
+  <div fm-component="foo">
+    <input type="text" name="status" @change="updateStatus" />
+  </div>
+  <div fm-component="bar"><div class="j-status"></div></div>
 </div>
 ```
 
 ```js
 new Formotor({
-    el: '[fm-app]',
-    components: {
-        'foo': {
-            methods: {
-                updateStatus: function(e) {
-                    this.$broadcast('foo:change', e.target.value);
-                }
-            }
-        },
-        'bar': {
-            ready: function() {
-                this.listen();
-            },
-            methods: {
-                listen: function() {
-                    this.$listen('foo:change', this.showStatus);
-                },
-                showStatus: function(status) {
-                    this.$find('.j-status').text(status);
-                }
-            }
+  el: '[fm-app]',
+  components: {
+    foo: {
+      methods: {
+        updateStatus: function(e) {
+          this.$broadcast('foo:change', e.target.value);
         }
+      }
+    },
+    bar: {
+      ready: function() {
+        this.listen();
+      },
+      methods: {
+        listen: function() {
+          this.$listen('foo:change', this.showStatus);
+        },
+        showStatus: function(status) {
+          this.$find('.j-status').text(status);
+        }
+      }
     }
+  }
 });
 ```
 

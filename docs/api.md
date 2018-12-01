@@ -18,10 +18,10 @@
   ```js
   Formotor.config({
     silent: true,
-    baseComponent: "basic"
+    baseComponent: 'basic'
   });
-  Formotor.config("silent", false);
-  Formotor.config("silent"); // false
+  Formotor.config('silent', false);
+  Formotor.config('silent'); // false
   ```
 
 ### Registration
@@ -74,8 +74,10 @@ The global configuration can be set via `Formotor.config`.
 
   ```html
   <div fm-app>
-      <div fm-on:click="greet"></div><!-- directly -->
-      <div fm-on:click="greet" class="j-foo"></div><!-- proxy -->
+    <div fm-on:click="greet"></div>
+    <!-- directly -->
+    <div fm-on:click="greet" class="j-foo"></div>
+    <!-- proxy -->
   </div>
   ```
 
@@ -90,10 +92,10 @@ The global configuration can be set via `Formotor.config`.
 - Example:
 
   ```js
-  Formotor.component("my-basic", {
+  Formotor.component('my-basic', {
     // options
   });
-  Formotor.config("baseComponent", "my-basic");
+  Formotor.config('baseComponent', 'my-basic');
   ```
 
 ## Component Options
@@ -146,13 +148,13 @@ The global configuration can be set via `Formotor.config`.
 - Example:
 
   ```js
-  Formotor.component("foo", {
+  Formotor.component('foo', {
     proxies: {
-      "click .j-list .j-item": "showDetail"
+      'click .j-list .j-item': 'showDetail'
     },
     methods: {
       showDetail: function(event) {
-        console.log("Detail");
+        console.log('Detail');
       }
     }
   });
@@ -181,22 +183,19 @@ The global configuration can be set via `Formotor.config`.
 - Example:
 
   ```html
-  <div fm-app>
-      <div fm-component="child">
-      </div>
-  </div>
+  <div fm-app><div fm-component="child"></div></div>
   ```
 
   ```js
   new Formotor({
-    el: "[fm-app]",
+    el: '[fm-app]',
     init: function() {
-      console.log("Root init");
+      console.log('Root init');
     },
     components: {
       child: {
         init: function() {
-          console.log("Child init");
+          console.log('Child init');
         }
       }
     }
@@ -216,22 +215,19 @@ The global configuration can be set via `Formotor.config`.
 - Example:
 
   ```html
-  <div fm-app>
-      <div fm-component="child">
-      </div>
-  </div>
+  <div fm-app><div fm-component="child"></div></div>
   ```
 
   ```js
   new Formotor({
-    el: "[fm-app]",
+    el: '[fm-app]',
     ready: function() {
-      console.log("Root ready");
+      console.log('Root ready');
     },
     components: {
       child: {
         ready: function() {
-          console.log("Child ready");
+          console.log('Child ready');
         }
       }
     }
@@ -265,42 +261,42 @@ The global configuration can be set via `Formotor.config`.
 
 ### Element
 
-#### $name
+#### \$name
 
 - Type: `String`
 - Detail:
 
   The name of the component.
 
-#### $el
+#### \$el
 
 - Type: `jQuery`
 - Detail:
 
   The DOM element that the component is mounted on.
 
-#### $primary
+#### \$primary
 
 - Type: `jQuery`
 - Detail:
 
   A form element that is consistent with the component name.
 
-#### $root
+#### \$root
 
 - Type: `jQuery`
 - Detail:
 
   The root component of the component tree. The `$root` attribute of the root component is itself.
 
-#### $parent
+#### \$parent
 
 - Type: `jQuery | Null`
 - Detail:
 
   The parent component of the current component. The `$parent` of the root component is `null`.
 
-#### $children
+#### \$children
 
 - Type: `Array<jQuery>`
 - Detail:
@@ -311,7 +307,7 @@ The global configuration can be set via `Formotor.config`.
 
 ### Form
 
-#### $find(selector)
+#### \$find(selector)
 
 - Arguments:
   - `{String} selector`
@@ -319,7 +315,7 @@ The global configuration can be set via `Formotor.config`.
 
   Query elements under the DOM node of the current component. Equivalent to `this.$el.find(selector)`.
 
-#### $get()
+#### \$get()
 
 - Usage:
 
@@ -329,25 +325,22 @@ The global configuration can be set via `Formotor.config`.
 
   ```html
   <div fm-app>
-      <div fm-component="foo">
-          <input type="text" name="foo" value="Hello"/>
-      </div>
-      <div fm-component="bar">
-          <input type="text" name="bar" value="World"/>
-      </div>
-  <div>
+    <div fm-component="foo"><input type="text" name="foo" value="Hello" /></div>
+    <div fm-component="bar"><input type="text" name="bar" value="World" /></div>
+    <div></div>
+  </div>
   ```
 
   ```js
   var comp = new Formotor({
-    el: "[fm-app]",
+    el: '[fm-app]',
     components: {
       foo: {},
       bar: {
         methods: {
           getValues: function() {
             return {
-              "bar-plus": "World Plus"
+              'bar-plus': 'World Plus'
             };
           }
         }
@@ -360,7 +353,7 @@ The global configuration can be set via `Formotor.config`.
   // {"foo":"Hello","bar-plus":"World Plus"}
   ```
 
-#### $set()
+#### \$set()
 
 - Usage:
 
@@ -370,24 +363,20 @@ The global configuration can be set via `Formotor.config`.
 
   ```html
   <div fm-app>
-      <div fm-component="foo">
-          <input type="text" name="foo"/>
-      </div>
-      <div fm-component="bar">
-          <input type="text" name="bar"/>
-      </div>
+    <div fm-component="foo"><input type="text" name="foo" /></div>
+    <div fm-component="bar"><input type="text" name="bar" /></div>
   </div>
   ```
 
   ```js
   var comp = new Formotor({
-    el: "[fm-app]",
+    el: '[fm-app]',
     data: {
       model: function() {
         return {
-          foo: "Apple",
-          bar: "Pear",
-          barSize: "Small"
+          foo: 'Apple',
+          bar: 'Pear',
+          barSize: 'Small'
         };
       }
     },
@@ -397,8 +386,8 @@ The global configuration can be set via `Formotor.config`.
         methods: {
           setValues: function(data) {
             var $bar = this.$primary;
-            $bar.val(data.bar).attr("data-size", data.barSize);
-            console.log("Set attribute data-size:", $bar.attr("data-size"));
+            $bar.val(data.bar).attr('data-size', data.barSize);
+            console.log('Set attribute data-size:', $bar.attr('data-size'));
           }
         }
       }
@@ -409,7 +398,7 @@ The global configuration can be set via `Formotor.config`.
   // Set attribute data-size: Small
   ```
 
-#### $getValues(options, config)
+#### \$getValues(options, config)
 
 - Arguments:
 
@@ -420,7 +409,7 @@ The global configuration can be set via `Formotor.config`.
 
   Get the values of all form elements under the current component. See the `getValues` method of `formotor`.
 
-#### $setValues(data, handlers)
+#### \$setValues(data, handlers)
 
 - Arguments:
 
@@ -431,7 +420,7 @@ The global configuration can be set via `Formotor.config`.
 
   Sets the value of all form elements under the current component. See the `setValues` method of `formotor`.
 
-#### $callRef(name[, entire])
+#### \$callRef(name[, entire])
 
 - Arguments:
 
@@ -442,7 +431,7 @@ The global configuration can be set via `Formotor.config`.
 
   Reference data from other components in the current component. Other components return their own data by calling the `$provideRef` method. When `entire` is `true`, the complete data object is returned. By default, only the value corresponding to `name` is returned.
 
-#### $provideRef()
+#### \$provideRef()
 
 - Usage:
 
@@ -450,7 +439,7 @@ The global configuration can be set via `Formotor.config`.
 
 ### Custom Events
 
-#### $on(event, callback)
+#### \$on(event, callback)
 
 - Arguments:
 
@@ -463,7 +452,7 @@ The global configuration can be set via `Formotor.config`.
 
 - See also: [Custom Events](/component?id=custom-events)
 
-#### $once(event, callback)
+#### \$once(event, callback)
 
 - Arguments:
   - `{String} event`
@@ -472,7 +461,7 @@ The global configuration can be set via `Formotor.config`.
 
   Listen for custom events for component instances, removing listeners after the first trigger.
 
-#### $off([event, callback])
+#### \$off([event, callback])
 
 - Arguments:
 
@@ -483,7 +472,7 @@ The global configuration can be set via `Formotor.config`.
 
   Remove the listener for the event. If there are no parameters, delete all custom events for the component. If there is only an event, all listeners under that event are deleted. If the colleague passes the event and the callback, only the listener corresponding to the callback is deleted.
 
-#### $trigger(event[,...args])
+#### \$trigger(event[,...args])
 
 - Arguments:
 
@@ -492,7 +481,7 @@ The global configuration can be set via `Formotor.config`.
 
 - Usage: Triggers a custom event for the current component. In addition to the event name, other parameters are passed directly to the callback function.
 
-#### $listen(event, callback)
+#### \$listen(event, callback)
 
 - Arguments:
 
@@ -505,7 +494,7 @@ The global configuration can be set via `Formotor.config`.
 
 - See also: [Communication between Components](/component?id=communication-between-components)
 
-#### $broadcast(event[,...args])
+#### \$broadcast(event[,...args])
 
 - Arguments:
 
@@ -541,42 +530,42 @@ The global configuration can be set via `Formotor.config`.
 
   ```html
   <div fm-app>
-      <div fm-component="content">
-          <!-- only method name -->
-          <input type="text" name="title" fm-on:change="smile">
-          <!-- method expression, passing parameters manually -->
-          <input type="text" name="description" fm-on:change="cry('Cry', $event)">
-          <ul class="j-list">
-              <li class="j-item">
-                  <span>First</span>
-                  <!-- proxy event via `j-add-item` class -->
-                  <button type="button" class="j-add-item" @click="addItem">+</button>
-              </li>
-          </ul>
-          <!-- modifiers, you can use multiple modifiers at the same time -->
-          <button type="button" @click.stop.prevent="smile">Click Me</button>
-          <!-- modifier, `enter` is the alias of the carriage return -->
-          <input type="text" @keyup.enter="smile"/>
-          <!-- modifier, `32` is the code for the space character -->
-          <input type="text" @keyup.32="smile"/>
-      </div>
+    <div fm-component="content">
+      <!-- only method name -->
+      <input type="text" name="title" fm-on:change="smile" />
+      <!-- method expression, passing parameters manually -->
+      <input type="text" name="description" fm-on:change="cry('Cry', $event)" />
+      <ul class="j-list">
+        <li class="j-item">
+          <span>First</span>
+          <!-- proxy event via `j-add-item` class -->
+          <button type="button" class="j-add-item" @click="addItem">+</button>
+        </li>
+      </ul>
+      <!-- modifiers, you can use multiple modifiers at the same time -->
+      <button type="button" @click.stop.prevent="smile">Click Me</button>
+      <!-- modifier, `enter` is the alias of the carriage return -->
+      <input type="text" @keyup.enter="smile" />
+      <!-- modifier, `32` is the code for the space character -->
+      <input type="text" @keyup.32="smile" />
+    </div>
   </div>
   ```
 
   ```js
   new Formotor({
-    el: "[fm-app]",
+    el: '[fm-app]',
     components: {
       content: {
         methods: {
           smile: function(event) {
-            console.log("Smile");
+            console.log('Smile');
           },
           cry: function(msg, event) {
             console.log(msg);
           },
           addItem: function(event) {
-            console.log("Add Item");
+            console.log('Add Item');
           }
         }
       }

@@ -1,3 +1,3 @@
-* Translations
-  * [:us: EN](/)
-  * [:cn: 中文](/zh-cn/)
+- :airplane: Translations
+  - [:us: EN](/)
+  - [:cn: 中文](/zh-cn/)

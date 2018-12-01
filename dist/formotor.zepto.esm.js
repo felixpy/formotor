@@ -1,5 +1,5 @@
 /**
- * Formotor.js v1.0.0-alpha.2
+ * Formotor.js v1.0.0
  * (c) 2018 Felix Yang
  */
 import JZ from 'zepto';
@@ -1300,6 +1300,6 @@ function registryProto(Formotor) {
 registryProto(Formotor);
 registryGlobalAPI(Formotor);
 
-Formotor.version = '1.0.0-alpha.2';
+Formotor.version = '1.0.0';
 
 export default Formotor;

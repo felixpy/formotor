@@ -7,6 +7,10 @@ A lightweight jquery/zepto component framework for forms inspired by vue.js.
 [![Codecov](https://codecov.io/gh/felixpy/formotor/branch/dev/graph/badge.svg)](https://codecov.io/gh/felixpy/formotor)
 [![TravisCI](https://travis-ci.org/felixpy/formotor.svg?branch=dev)](https://travis-ci.org/felixpy/formotor)
 
+## Example
+
+<iframe width="100%" height="650" src="//jsfiddle.net/felixpy/x28rdemc/embedded/result,js,html/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
+
 ## License
 
-Copyright (c) 2018 - present, Felix Yang
+Copyright (c) 2016 - present, Felix Yang

@@ -12,9 +12,9 @@ A global directive can be registered via the `Formotor.directive(name, hooks)` m
 
 ```js
 Formotor.directive('greet', {
-    bind: function(el, bindings, comp) {
-        console.log('Greet:', bindings.value);
-    }
+  bind: function(el, bindings, comp) {
+    console.log('Greet:', bindings.value);
+  }
 });
 ```
 
@@ -22,18 +22,18 @@ This directive can be used in the component after registration:
 
 ```html
 <div fm-app>
-    <div fm-greet="msgX"></div>
-    <div fm-greet="msgY"></div>
+  <div fm-greet="msgX"></div>
+  <div fm-greet="msgY"></div>
 </div>
 ```
 
 ```js
 new Formotor({
-    el: '[fm-app]',
-    data: {
-        msgX: 'Hello X!',
-        msgY: 'Hello Y!'
-    }
+  el: '[fm-app]',
+  data: {
+    msgX: 'Hello X!',
+    msgY: 'Hello Y!'
+  }
 });
 
 // Greet: Hello X!
@@ -65,14 +65,14 @@ For directives that do not require global registration, they can be registered w
 
 ```js
 new Formotor({
-    el: '[fm-app]',
-    directives: {
-        greet: {
-            bind: function(el, bindings, comp) {
-                console.log('Greet:', bindings.value);
-            }
-        }
+  el: '[fm-app]',
+  directives: {
+    greet: {
+      bind: function(el, bindings, comp) {
+        console.log('Greet:', bindings.value);
+      }
     }
+  }
 });
 ```
 
@@ -82,7 +82,7 @@ In some cases, the directive only needs to be executed when `bind`, in which cas
 
 ```js
 Formotor.directive('greet', function(el, bindings, comp) {
-    console.log('Greet:', bindings.value);
+  console.log('Greet:', bindings.value);
 });
 ```
 
@@ -92,28 +92,28 @@ Directives can bind any legal JS expression, including object literals:
 
 ```html
 <div fm-app>
-    <!-- bind the `msg` property of the current component -->
-    <div fm-greet.var="msg"></div>
-    <!-- bind strings, numbers, booleans, etc. -->
-    <div fm-greet.str="'Hello'" fm-greet.num="12" fm-greet.bool="true"></div>
-    <!-- binding expression -->
-    <div fm-greet.exp="2+3"></div>
-    <!-- binding object literals -->
-    <div fm-greet.obj="{x:false,y:2+3,z:msg}"></div>
+  <!-- bind the `msg` property of the current component -->
+  <div fm-greet.var="msg"></div>
+  <!-- bind strings, numbers, booleans, etc. -->
+  <div fm-greet.str="'Hello'" fm-greet.num="12" fm-greet.bool="true"></div>
+  <!-- binding expression -->
+  <div fm-greet.exp="2+3"></div>
+  <!-- binding object literals -->
+  <div fm-greet.obj="{x:false,y:2+3,z:msg}"></div>
 </div>
 ```
 
 ```js
 new Formotor({
-    el: '[fm-app]',
-    data: {
-        msg: 'Good Morning'
-    },
-    directives: {
-        greet: function(el, bindings, comp) {
-            console.log('Greet:', JSON.stringify(bindings.value));
-        }
+  el: '[fm-app]',
+  data: {
+    msg: 'Good Morning'
+  },
+  directives: {
+    greet: function(el, bindings, comp) {
+      console.log('Greet:', JSON.stringify(bindings.value));
     }
+  }
 });
 
 // Greet: "Good Morning"

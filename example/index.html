@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" data-framework="jquery">
+  <head>
+    <meta charset="utf-8" />
+    <title>Formotor • TodoMVC</title>
+    <link rel="stylesheet" href="css/app.css" />
+  </head>
+  <body>
+    <section class="todoapp" fm-app>
+      <header class="header" fm-component="todo-header">
+        <h1>todos</h1>
+        <input
+          class="new-todo"
+          placeholder="What needs to be done?"
+          autofocus
+        />
+      </header>
+      <section class="main" fm-component="todo-content">
+        <input id="toggle-all" class="toggle-all" type="checkbox" />
+        <label for="toggle-all">Mark all as complete</label>
+        <ul class="todo-list"></ul>
+      </section>
+      <footer class="footer" fm-component="todo-footer"></footer>
+    </section>
+    <footer class="info">
+      <p>Double-click to edit a todo</p>
+      <p>Created by <a href="https://felixpy.com">Felix Yang</a></p>
+      <p>Part of <a href="https://felixpy.github.io/formotor">Formotor</a></p>
+    </footer>
+    <script id="todo-template" type="text/x-handlebars-template">
+      	{{#this}}
+      	<li {{#if completed}}class="completed"{{/if}} data-id="{{id}}">
+      		<div class="view">
+      			<input class="toggle" type="checkbox" {{#if completed}}checked{{/if}}>
+      			<label class="title">{{title}}</label>
+      			<button class="destroy"></button>
+      		</div>
+      		<input class="edit" value="{{title}}">
+      	</li>
+      {{/this}}
+    </script>
+    <script id="footer-template" type="text/x-handlebars-template">
+      <span class="todo-count"><strong>{{activeTodoCount}}</strong> {{activeTodoWord}} left</span>
+      <ul class="filters">
+      	<li>
+      		<a {{#eq filter 'all'}}class="selected"{{/eq}} href="#/all">All</a>
+      	</li>
+      	<li>
+      		<a {{#eq filter 'active'}}class="selected"{{/eq}}href="#/active">Active</a>
+      	</li>
+      	<li>
+      		<a {{#eq filter 'completed'}}class="selected"{{/eq}}href="#/completed">Completed</a>
+      	</li>
+      </ul>
+      {{#if completedTodos}}<button class="clear-completed">Clear completed</button>{{/if}}
+    </script>
+    <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/handlebars.js/4.0.12/handlebars.min.js"></script>
+    <script src="//cdn.bootcss.com/Director/1.2.8/director.min.js"></script>
+    <script src="//unpkg.com/formotor"></script>
+    <!-- <script src="js/app.mvc.js"></script> -->
+    <script src="js/app.formotor.js"></script>
+  </body>
+</html>

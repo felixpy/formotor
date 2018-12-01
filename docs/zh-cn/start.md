@@ -7,61 +7,61 @@
 ```html
 <!-- HTML 模板 -->
 <div fm-app>
-    <div fm-component="foo">
-        <input type="text" name="book" @change="printValue" />
-    </div>
-    <div fm-component="bar">
-        <div fm-greet="2 + 3"></div>
-        <div class="j-bar-content">Bar Content Here</div>
-    </div>
+  <div fm-component="foo">
+    <input type="text" name="book" @change="printValue" />
+  </div>
+  <div fm-component="bar">
+    <div fm-greet="2 + 3"></div>
+    <div class="j-bar-content">Bar Content Here</div>
+  </div>
 </div>
 ```
 
 ```js
 // 使用全局 API 注册 foo 组件
 Formotor.component('foo', {
-    ready: function() {
-        console.log('Foo is ready now!');
-    },
-    methods: {
-        printValue: function(e) {
-            console.log(e.target.value);
-        }
+  ready: function() {
+    console.log('Foo is ready now!');
+  },
+  methods: {
+    printValue: function(e) {
+      console.log(e.target.value);
     }
+  }
 });
 
 var comp = new Formotor({
-    el: '[fm-app]',
-    ready: function() {
-        console.log('Everything is ready now!');
-    },
-    directives: {
-        greet: function(el, bindings, comp) {
-            console.log('Greet:', bindings.value);
+  el: '[fm-app]',
+  ready: function() {
+    console.log('Everything is ready now!');
+  },
+  directives: {
+    greet: function(el, bindings, comp) {
+      console.log('Greet:', bindings.value);
+    }
+  },
+  components: {
+    bar: {
+      data: {
+        msg: function() {
+          return {
+            hello: 'Hello by Bar!'
+          };
         }
-    },
-    components: {
-        bar: {
-            data: {
-                msg: function() {
-                    return {
-                        hello: 'Hello by Bar!'
-                    };
-                }
-            },
-            proxies: {
-                'click .j-bar-content': 'doSomething'
-            },
-            ready: function() {
-                console.log('Bar is ready now!');
-            },
-            methods: {
-                doSomething: function() {
-                    console.log(this.msg.hello);
-                }
-            }
+      },
+      proxies: {
+        'click .j-bar-content': 'doSomething'
+      },
+      ready: function() {
+        console.log('Bar is ready now!');
+      },
+      methods: {
+        doSomething: function() {
+          console.log(this.msg.hello);
         }
-    },
+      }
+    }
+  }
 });
 ```
 
@@ -87,7 +87,7 @@ Hello by Bar!
 
 ```html
 <form id="sample">
-  <input type="text" name="a" value="foo">
+  <input type="text" name="a" value="foo" />
   <select name="b" multiple>
     <option selected value="1">A</option>
     <option selected value="2">B</option>
@@ -99,7 +99,7 @@ Hello by Bar!
 使用 `getValues` 来获取整个表单的数据：
 
 ```javascript
-$('form#sample').formotor('getValues')
+$('form#sample').formotor('getValues');
 // { a: 'foo', b: ['1', '2'] }
 ```
 
@@ -111,7 +111,7 @@ $('form#sample').formotor('getValues')
 $('form#sample').formotor('setValues', {
   a: 'bar',
   b: ['2', '3']
-})
+});
 ```
 
 这些方法都是支持配置项的，请参阅文档查看详情。

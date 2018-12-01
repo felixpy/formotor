@@ -2,66 +2,66 @@
 
 ## Create Form View
 
-Let's take a simple example to demonstrate the basic use of the `Formotor` component system.
+Let's take a simple example to demonstrate the basic usage of the `Formotor` component system.
 
 ```html
 <!-- HTML Template -->
 <div fm-app>
-    <div fm-component="foo">
-        <input type="text" name="book" @change="printValue" />
-    </div>
-    <div fm-component="bar">
-        <div fm-greet="2 + 3"></div>
-        <div class="j-bar-content">Bar Content Here</div>
-    </div>
+  <div fm-component="foo">
+    <input type="text" name="book" @change="printValue" />
+  </div>
+  <div fm-component="bar">
+    <div fm-greet="2 + 3"></div>
+    <div class="j-bar-content">Bar Content Here</div>
+  </div>
 </div>
 ```
 
 ```js
 // Register the foo component with the global API
 Formotor.component('foo', {
-    ready: function() {
-        console.log('Foo is ready now!');
-    },
-    methods: {
-        printValue: function(e) {
-            console.log(e.target.value);
-        }
+  ready: function() {
+    console.log('Foo is ready now!');
+  },
+  methods: {
+    printValue: function(e) {
+      console.log(e.target.value);
     }
+  }
 });
 
 var comp = new Formotor({
-    el: '[fm-app]',
-    ready: function() {
-        console.log('Everything is ready now!');
-    },
-    directives: {
-        greet: function(el, bindings, comp) {
-            console.log('Greet:', bindings.value);
+  el: '[fm-app]',
+  ready: function() {
+    console.log('Everything is ready now!');
+  },
+  directives: {
+    greet: function(el, bindings, comp) {
+      console.log('Greet:', bindings.value);
+    }
+  },
+  components: {
+    bar: {
+      data: {
+        msg: function() {
+          return {
+            hello: 'Hello by Bar!'
+          };
         }
-    },
-    components: {
-        bar: {
-            data: {
-                msg: function() {
-                    return {
-                        hello: 'Hello by Bar!'
-                    };
-                }
-            },
-            proxies: {
-                'click .j-bar-content': 'doSomething'
-            },
-            ready: function() {
-                console.log('Bar is ready now!');
-            },
-            methods: {
-                doSomething: function() {
-                    console.log(this.msg.hello);
-                }
-            }
+      },
+      proxies: {
+        'click .j-bar-content': 'doSomething'
+      },
+      ready: function() {
+        console.log('Bar is ready now!');
+      },
+      methods: {
+        doSomething: function() {
+          console.log(this.msg.hello);
         }
-    },
+      }
+    }
+  }
 });
 ```
 
@@ -87,7 +87,7 @@ Suppose you have a form like the one below:
 
 ```html
 <form id="sample">
-  <input type="text" name="a" value="foo">
+  <input type="text" name="a" value="foo" />
   <select name="b" multiple>
     <option selected value="1">A</option>
     <option selected value="2">B</option>
@@ -99,7 +99,7 @@ Suppose you have a form like the one below:
 Use `getValues` to get the data for the entire form:
 
 ```javascript
-$('form#sample').formotor('getValues')
+$('form#sample').formotor('getValues');
 // { a: 'foo', b: ['1', '2'] }
 ```
 
@@ -111,7 +111,7 @@ And `setValues` does the opposite, backfilling the data into the entire form:
 $('form#sample').formotor('setValues', {
   a: 'bar',
   b: ['2', '3']
-})
+});
 ```
 
 These methods are configurable, please refer to the documentation for details.

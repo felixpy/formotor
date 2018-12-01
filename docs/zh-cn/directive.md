@@ -12,9 +12,9 @@
 
 ```js
 Formotor.directive('greet', {
-    bind: function(el, bindings, comp) {
-        console.log('Greet:', bindings.value);
-    }
+  bind: function(el, bindings, comp) {
+    console.log('Greet:', bindings.value);
+  }
 });
 ```
 
@@ -22,18 +22,18 @@ Formotor.directive('greet', {
 
 ```html
 <div fm-app>
-    <div fm-greet="msgX"></div>
-    <div fm-greet="msgY"></div>
+  <div fm-greet="msgX"></div>
+  <div fm-greet="msgY"></div>
 </div>
 ```
 
 ```js
 new Formotor({
-    el: '[fm-app]',
-    data: {
-        msgX: 'Hello X!',
-        msgY: 'Hello Y!'
-    }
+  el: '[fm-app]',
+  data: {
+    msgX: 'Hello X!',
+    msgY: 'Hello Y!'
+  }
 });
 
 // Greet: Hello X!
@@ -65,14 +65,14 @@ new Formotor({
 
 ```js
 new Formotor({
-    el: '[fm-app]',
-    directives: {
-        greet: {
-            bind: function(el, bindings, comp) {
-                console.log('Greet:', bindings.value);
-            }
-        }
+  el: '[fm-app]',
+  directives: {
+    greet: {
+      bind: function(el, bindings, comp) {
+        console.log('Greet:', bindings.value);
+      }
     }
+  }
 });
 ```
 
@@ -82,38 +82,38 @@ new Formotor({
 
 ```js
 Formotor.directive('greet', function(el, bindings, comp) {
-    console.log('Greet:', bindings.value);
+  console.log('Greet:', bindings.value);
 });
 ```
 
 ### 对象字面量
 
-指令可以绑定任意合法的JS表达式，包括对象字面量：
+指令可以绑定任意合法的 JS 表达式，包括对象字面量：
 
 ```html
 <div fm-app>
-    <!-- 绑定组件的 msg 属性 -->
-    <div fm-greet.var="msg"></div>
-    <!-- 绑定字符串、数字、布尔值等直接量 -->
-    <div fm-greet.str="'Hello'" fm-greet.num="12" fm-greet.bool="true"></div>
-    <!-- 绑定表达式 -->
-    <div fm-greet.exp="2+3"></div>
-    <!-- 绑定对象字面量 -->
-    <div fm-greet.obj="{x:false,y:2+3,z:msg}"></div>
+  <!-- 绑定组件的 msg 属性 -->
+  <div fm-greet.var="msg"></div>
+  <!-- 绑定字符串、数字、布尔值等直接量 -->
+  <div fm-greet.str="'Hello'" fm-greet.num="12" fm-greet.bool="true"></div>
+  <!-- 绑定表达式 -->
+  <div fm-greet.exp="2+3"></div>
+  <!-- 绑定对象字面量 -->
+  <div fm-greet.obj="{x:false,y:2+3,z:msg}"></div>
 </div>
 ```
 
 ```js
 new Formotor({
-    el: '[fm-app]',
-    data: {
-        msg: 'Good Morning'
-    },
-    directives: {
-        greet: function(el, bindings, comp) {
-            console.log('Greet:', JSON.stringify(bindings.value));
-        }
+  el: '[fm-app]',
+  data: {
+    msg: 'Good Morning'
+  },
+  directives: {
+    greet: function(el, bindings, comp) {
+      console.log('Greet:', JSON.stringify(bindings.value));
     }
+  }
 });
 
 // Greet: "Good Morning"

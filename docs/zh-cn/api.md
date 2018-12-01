@@ -18,10 +18,10 @@
   ```js
   Formotor.config({
     silent: true,
-    baseComponent: "basic"
+    baseComponent: 'basic'
   });
-  Formotor.config("silent", false);
-  Formotor.config("silent"); // false
+  Formotor.config('silent', false);
+  Formotor.config('silent'); // false
   ```
 
 ### 注册
@@ -74,8 +74,10 @@
 
   ```html
   <div fm-app>
-      <div fm-on:click="greet"></div><!-- 直接监听 -->
-      <div fm-on:click="greet" class="j-foo"></div><!-- 代理监听 -->
+    <div fm-on:click="greet"></div>
+    <!-- 直接监听 -->
+    <div fm-on:click="greet" class="j-foo"></div>
+    <!-- 代理监听 -->
   </div>
   ```
 
@@ -90,10 +92,10 @@
 - 示例：
 
   ```js
-  Formotor.component("my-basic", {
+  Formotor.component('my-basic', {
     // options
   });
-  Formotor.config("baseComponent", "my-basic");
+  Formotor.config('baseComponent', 'my-basic');
   ```
 
 ## 组件选项
@@ -146,13 +148,13 @@
 - 示例：
 
   ```js
-  Formotor.component("foo", {
+  Formotor.component('foo', {
     proxies: {
-      "click .j-list .j-item": "showDetail"
+      'click .j-list .j-item': 'showDetail'
     },
     methods: {
       showDetail: function(event) {
-        console.log("Detail");
+        console.log('Detail');
       }
     }
   });
@@ -181,22 +183,19 @@
 - 示例：
 
   ```html
-  <div fm-app>
-      <div fm-component="child">
-      </div>
-  </div>
+  <div fm-app><div fm-component="child"></div></div>
   ```
 
   ```js
   new Formotor({
-    el: "[fm-app]",
+    el: '[fm-app]',
     init: function() {
-      console.log("Root init");
+      console.log('Root init');
     },
     components: {
       child: {
         init: function() {
-          console.log("Child init");
+          console.log('Child init');
         }
       }
     }
@@ -216,22 +215,19 @@
 - 示例：
 
   ```html
-  <div fm-app>
-      <div fm-component="child">
-      </div>
-  </div>
+  <div fm-app><div fm-component="child"></div></div>
   ```
 
   ```js
   new Formotor({
-    el: "[fm-app]",
+    el: '[fm-app]',
     ready: function() {
-      console.log("Root ready");
+      console.log('Root ready');
     },
     components: {
       child: {
         ready: function() {
-          console.log("Child ready");
+          console.log('Child ready');
         }
       }
     }
@@ -265,42 +261,42 @@
 
 ### 元素
 
-#### $name
+#### \$name
 
 - 类型：`String`
 - 详细：
 
   组件的名称。
 
-#### $el
+#### \$el
 
 - 类型：`jQuery`
 - 详细：
 
   组件依附的 DOM 元素。
 
-#### $primary
+#### \$primary
 
 - 类型：`jQuery`
 - 详细：
 
   与组件名称一致的表单元素。
 
-#### $root
+#### \$root
 
 - 类型：`jQuery`
 - 详细：
 
   组件树的根组件。根组件的`$root`属性为自身。
 
-#### $parent
+#### \$parent
 
 - 类型：`jQuery | Null`
 - 详细：
 
   当前组件的父组件。根组件的`$parent`为`null`。
 
-#### $children
+#### \$children
 
 - 类型：`Array<jQuery>`
 - 详细：
@@ -311,7 +307,7 @@
 
 ### 表单操作
 
-#### $find(selector)
+#### \$find(selector)
 
 - 参数：
   - `{String} selector`
@@ -319,7 +315,7 @@
 
   在当前组件的 DOM 节点下查询元素。等同于`this.$el.find(selector)`。
 
-#### $get()
+#### \$get()
 
 - 用法：
 
@@ -329,25 +325,22 @@
 
   ```html
   <div fm-app>
-      <div fm-component="foo">
-          <input type="text" name="foo" value="Hello"/>
-      </div>
-      <div fm-component="bar">
-          <input type="text" name="bar" value="World"/>
-      </div>
-  <div>
+    <div fm-component="foo"><input type="text" name="foo" value="Hello" /></div>
+    <div fm-component="bar"><input type="text" name="bar" value="World" /></div>
+    <div></div>
+  </div>
   ```
 
   ```js
   var comp = new Formotor({
-    el: "[fm-app]",
+    el: '[fm-app]',
     components: {
       foo: {},
       bar: {
         methods: {
           getValues: function() {
             return {
-              "bar-plus": "World Plus"
+              'bar-plus': 'World Plus'
             };
           }
         }
@@ -360,7 +353,7 @@
   // {"foo":"Hello","bar-plus":"World Plus"}
   ```
 
-#### $set()
+#### \$set()
 
 - 用法：
 
@@ -370,24 +363,20 @@
 
   ```html
   <div fm-app>
-      <div fm-component="foo">
-          <input type="text" name="foo"/>
-      </div>
-      <div fm-component="bar">
-          <input type="text" name="bar"/>
-      </div>
+    <div fm-component="foo"><input type="text" name="foo" /></div>
+    <div fm-component="bar"><input type="text" name="bar" /></div>
   </div>
   ```
 
   ```js
   var comp = new Formotor({
-    el: "[fm-app]",
+    el: '[fm-app]',
     data: {
       model: function() {
         return {
-          foo: "Apple",
-          bar: "Pear",
-          barSize: "Small"
+          foo: 'Apple',
+          bar: 'Pear',
+          barSize: 'Small'
         };
       }
     },
@@ -397,8 +386,8 @@
         methods: {
           setValues: function(data) {
             var $bar = this.$primary;
-            $bar.val(data.bar).attr("data-size", data.barSize);
-            console.log("Set attribute data-size:", $bar.attr("data-size"));
+            $bar.val(data.bar).attr('data-size', data.barSize);
+            console.log('Set attribute data-size:', $bar.attr('data-size'));
           }
         }
       }
@@ -409,7 +398,7 @@
   // Set attribute data-size: Small
   ```
 
-#### $getValues(options, config)
+#### \$getValues(options, config)
 
 - 参数：
 
@@ -420,7 +409,7 @@
 
   获取当前组件下所有表单的值。参见`formotor`的`getValues`方法。
 
-#### $setValues(data, handlers)
+#### \$setValues(data, handlers)
 
 - 参数：
 
@@ -431,7 +420,7 @@
 
   设置当前组件下所有表单的值。参见`formotor`的`setValues`方法。
 
-#### $callRef(name[, entire])
+#### \$callRef(name[, entire])
 
 - 参数：
 
@@ -442,7 +431,7 @@
 
   在当前组件中引用其它组件的数据。其它组件通过调用`$provideRef`方法返回自身的数据。当`entire`为`true`时，返回完整的数据对象，默认只返回与`name`对应的值。
 
-#### $provideRef()
+#### \$provideRef()
 
 - 用法：
 
@@ -450,7 +439,7 @@
 
 ### 自定义事件
 
-#### $on(event, callback)
+#### \$on(event, callback)
 
 - 参数：
 
@@ -463,7 +452,7 @@
 
 - 另见：[自定义事件](/zh-cn/component?id=自定义事件)
 
-#### $once(event, callback)
+#### \$once(event, callback)
 
 - 参数：
   - `{String} event`
@@ -472,7 +461,7 @@
 
   监听组件实例的自定义事件，在第一次触发之后删除监听器。
 
-#### $off([event, callback])
+#### \$off([event, callback])
 
 - 参数：
 
@@ -483,7 +472,7 @@
 
   删除事件的监听器。若没有参数，则删除组件的所有自定义事件。若只有事件，则删除该事件下的所有监听器。若同事传递了事件和回调，则删除该回调对应的监听器。
 
-#### $trigger(event[,...args])
+#### \$trigger(event[,...args])
 
 - 参数：
 
@@ -492,7 +481,7 @@
 
 - 用法：触发组件的自定义事件。除了事件名称，其它的参数都会直接传递给回调函数。
 
-#### $listen(event, callback)
+#### \$listen(event, callback)
 
 - 参数：
 
@@ -505,7 +494,7 @@
 
 - 另见：[组件间的通信](/zh-cn/component?id=组件间的通信)
 
-#### $broadcast(event[,...args])
+#### \$broadcast(event[,...args])
 
 - 参数：
 
@@ -541,42 +530,42 @@
 
   ```html
   <div fm-app>
-      <div fm-component="content">
-          <!-- 方法名 -->
-          <input type="text" name="title" fm-on:change="smile">
-          <!-- 方法表达式，手动传递参数 -->
-          <input type="text" name="description" fm-on:change="cry('Cry', $event)">
-          <ul class="j-list">
-              <li class="j-item">
-                  <span>First</span>
-                  <!-- 通过 j-add-item 类代理事件 -->
-                  <button type="button" class="j-add-item" @click="addItem">+</button>
-              </li>
-          </ul>
-          <!-- 修饰符，可以同时使用多个修饰符 -->
-          <button type="button" @click.stop.prevent="smile">Click Me</button>
-          <!-- 修饰符，enter 为回车符的别名 -->
-          <input type="text" @keyup.enter="smile"/>
-          <!-- 修饰符，32 为空格符的代码 -->
-          <input type="text" @keyup.32="smile"/>
-      </div>
+    <div fm-component="content">
+      <!-- 方法名 -->
+      <input type="text" name="title" fm-on:change="smile" />
+      <!-- 方法表达式，手动传递参数 -->
+      <input type="text" name="description" fm-on:change="cry('Cry', $event)" />
+      <ul class="j-list">
+        <li class="j-item">
+          <span>First</span>
+          <!-- 通过 j-add-item 类代理事件 -->
+          <button type="button" class="j-add-item" @click="addItem">+</button>
+        </li>
+      </ul>
+      <!-- 修饰符，可以同时使用多个修饰符 -->
+      <button type="button" @click.stop.prevent="smile">Click Me</button>
+      <!-- 修饰符，enter 为回车符的别名 -->
+      <input type="text" @keyup.enter="smile" />
+      <!-- 修饰符，32 为空格符的代码 -->
+      <input type="text" @keyup.32="smile" />
+    </div>
   </div>
   ```
 
   ```js
   new Formotor({
-    el: "[fm-app]",
+    el: '[fm-app]',
     components: {
       content: {
         methods: {
           smile: function(event) {
-            console.log("Smile");
+            console.log('Smile');
           },
           cry: function(msg, event) {
             console.log(msg);
           },
           addItem: function(event) {
-            console.log("Add Item");
+            console.log('Add Item');
           }
         }
       }
