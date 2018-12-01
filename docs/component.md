@@ -12,21 +12,19 @@ A global component can be registered via the `Formotor.component(name, options)`
 
 ```js
 Formotor.component('example', {
-    // options
+  // options
 });
 ```
 
 Once the component is registered, it can be used in HTML:
 
 ```html
-<div fm-app>
-    <div fm-component="example"></div>
-</div>
+<div fm-app><div fm-component="example"></div></div>
 ```
 
 ```js
 new Formotor({
-    el: '[fm-app]'
+  el: '[fm-app]'
 });
 ```
 
@@ -34,7 +32,7 @@ For components that are not registered, Formotor Component automatically uses a 
 
 ```js
 Formotor.component('basic', {
-    // options of basic component
+  // options of basic component
 });
 ```
 
@@ -44,13 +42,13 @@ For components that do not require global registration, they can be registered w
 
 ```js
 new Formotor({
-    el: '[fm-app]',
-    components: {
-        // register example component
-        'example': {
-            // options
-        }
+  el: '[fm-app]',
+  components: {
+    // register example component
+    example: {
+      // options
     }
+  }
 });
 ```
 
@@ -61,19 +59,17 @@ new Formotor({
 The root component's constructor needs to specify the attached DOM node via the `el` option.
 
 ```html
-<div fm-app id="app">
-    <div fm-component="content"></div>
-</div>
+<div fm-app id="app"><div fm-component="content"></div></div>
 ```
 
 ```js
 // register content component
 Formotor.component('content', {
-    // options, no need to specify the el option
+  // options, no need to specify the el option
 });
 // generate a component tree from the specified elements
 var comp = new Formotor({
-    el: '[fm-app]' // you can also use '#app' or something else
+  el: '[fm-app]' // you can also use '#app' or something else
 });
 ```
 
@@ -84,13 +80,13 @@ The component's constructor can receive a `data` option as the initial data for 
 ```js
 // data.foo is an object literal
 var comp = new Formotor({
-    el: '[fm-app]',
-    data: {
-        foo: {
-            bar: 1
-        },
-        greet: 'hello'
-    }
+  el: '[fm-app]',
+  data: {
+    foo: {
+      bar: 1
+    },
+    greet: 'hello'
+  }
 });
 ```
 
@@ -98,15 +94,15 @@ The first alternative, `data.foo` is a function:
 
 ```js
 var comp = new Formotor({
-    el: '[fm-app]',
-    data: {
-        foo: function() {
-            return {
-                bar: 1
-            };
-        },
-        greet: 'hello'
-    }
+  el: '[fm-app]',
+  data: {
+    foo: function() {
+      return {
+        bar: 1
+      };
+    },
+    greet: 'hello'
+  }
 });
 ```
 
@@ -114,15 +110,15 @@ The second alternative, `data` is a function:
 
 ```js
 var comp = new Formotor({
-    el: '[fm-app]',
-    data: function() {
-        return {
-            foo: {
-                bar: 1
-            },
-            greet: 'hello'
-        };
-    }
+  el: '[fm-app]',
+  data: function() {
+    return {
+      foo: {
+        bar: 1
+      },
+      greet: 'hello'
+    };
+  }
 });
 ```
 
@@ -139,22 +135,22 @@ With the `data` option, you can also set a special data `model` that will be use
 
 ```js
 new Formotor({
-    el: '[fm-app]',
-    data: {
-        model: function() {
-            return {
-                foo: 1,
-                bar: 2
-            };
-        }
-    },
-    components: {
-        bar: {
-            ready: function() {
-                console.log(this.model.foo, this.model.bar);
-            }
-        }
+  el: '[fm-app]',
+  data: {
+    model: function() {
+      return {
+        foo: 1,
+        bar: 2
+      };
     }
+  },
+  components: {
+    bar: {
+      ready: function() {
+        console.log(this.model.foo, this.model.bar);
+      }
+    }
+  }
 });
 
 // 1 2
@@ -166,16 +162,16 @@ Similar to `data`, a component can receive a `methods` option and convert it to 
 
 ```js
 var comp = new Formotor({
-    el: '[fm-app]',
-    methods: {
-        greet: function() {
-            console.log('Say Hello!');
-            this.cheer('Nice Day!');
-        },
-        cheer: function(msg) {
-            console.log(msg);
-        }
+  el: '[fm-app]',
+  methods: {
+    greet: function() {
+      console.log('Say Hello!');
+      this.cheer('Nice Day!');
+    },
+    cheer: function(msg) {
+      console.log(msg);
     }
+  }
 });
 
 comp.greet();
@@ -189,42 +185,44 @@ You can specify the DOM event (via jQuery) that needs to be delegated to the com
 
 ```html
 <div fm-app>
-    <div fm-component="foo">
-        <div class="j-content">Content: Click Here</div>
-        <div class="j-content">Another Content: Click Here</div>
-        <div class="j-footer" @click="greet($event, 'By Footer!');">Footer: Click Here</div>
-        <div class="j-footer">Another Footer: Click Here</div>
+  <div fm-component="foo">
+    <div class="j-content">Content: Click Here</div>
+    <div class="j-content">Another Content: Click Here</div>
+    <div class="j-footer" @click="greet($event, 'By Footer!');">
+      Footer: Click Here
     </div>
+    <div class="j-footer">Another Footer: Click Here</div>
+  </div>
 </div>
 ```
 
 ```js
 var comp = new Formotor({
-    el: '[fm-app]',
-    components: {
-        'foo': {
-            proxies: {
-                'click .j-content': 'greet'
-            },
-            methods: {
-                greet: function(event, msg) {
-                    msg = msg || '';
-                    console.log('Say Hello!' + msg);
-                }
-            }
+  el: '[fm-app]',
+  components: {
+    foo: {
+      proxies: {
+        'click .j-content': 'greet'
+      },
+      methods: {
+        greet: function(event, msg) {
+          msg = msg || '';
+          console.log('Say Hello!' + msg);
         }
+      }
     }
+  }
 });
 
 // Click `div.j-content` > Say Hello!
 // Click `div.j-footer`  > Say Hello!By Footer!
 ```
 
-As you can see from the above example, the `click` event on `div.j-footer` is also proxy, because when the event is bound by `fm-on:` or `@`, if the element has a class of the specified format (a class that starts with `j-`), then the event is also proxied to the component container through those classes. So the ``click` event of `div.j-footer` is actually listened to by the following way:
+As you can see from the above example, the `click` event on `div.j-footer` is also proxy, because when the event is bound by `fm-on:` or `@`, if the element has a class of the specified format (a class that starts with `j-`), then the event is also proxied to the component container through those classes. So the ``click`event of`div.j-footer` is actually listened to by the following way:
 
 ```js
 comp.$el.on('click', '.j-footer', function(e) {
-    comp.greet(e, 'By Footer');
+  comp.greet(e, 'By Footer');
 });
 ```
 
@@ -234,18 +232,18 @@ In addition to DOM events, Formotor Component has its own custom event system. Y
 
 ```js
 var comp = new Formotor({
-    el: '[fm-app]',
-    events: {
-        'act:smile': 'smile'
+  el: '[fm-app]',
+  events: {
+    'act:smile': 'smile'
+  },
+  methods: {
+    smile: function(msg) {
+      console.log('Smile:', msg);
     },
-    methods: {
-        smile: function(msg) {
-            console.log('Smile:', msg);
-        },
-        cry: function(msg) {
-            console.log('Cry:', msg);
-        }
+    cry: function(msg) {
+      console.log('Cry:', msg);
     }
+  }
 });
 comp.$on('act:cry', comp.cry);
 
@@ -265,40 +263,38 @@ In actual use, the component responds to the message by listening to the event o
 
 ```html
 <div fm-app>
-    <div fm-component="foo">
-        <input type="text" name="status" @change="updateStatus"/>
-    </div>
-    <div fm-component="bar">
-        <div class="j-status"></div>
-    </div>
+  <div fm-component="foo">
+    <input type="text" name="status" @change="updateStatus" />
+  </div>
+  <div fm-component="bar"><div class="j-status"></div></div>
 </div>
 ```
 
 ```js
 new Formotor({
-    el: '[fm-app]',
-    components: {
-        'foo': {
-            methods: {
-                updateStatus: function(e) {
-                    this.$broadcast('foo:change', e.target.value);
-                }
-            }
-        },
-        'bar': {
-            ready: function() {
-                this.listen();
-            },
-            methods: {
-                listen: function() {
-                    this.$listen('foo:change', this.showStatus);
-                },
-                showStatus: function(status) {
-                    this.$find('.j-status').text(status);
-                }
-            }
+  el: '[fm-app]',
+  components: {
+    foo: {
+      methods: {
+        updateStatus: function(e) {
+          this.$broadcast('foo:change', e.target.value);
         }
+      }
+    },
+    bar: {
+      ready: function() {
+        this.listen();
+      },
+      methods: {
+        listen: function() {
+          this.$listen('foo:change', this.showStatus);
+        },
+        showStatus: function(status) {
+          this.$find('.j-status').text(status);
+        }
+      }
     }
+  }
 });
 ```
 

@@ -27,7 +27,7 @@ You can include Formotor directly with a `script` tag via CDN, but you must make
 
 ```html
 <script src="https://unpkg.com/zepto"></script>
-<script src="https://unpkg.com/formotor"></script>
+<script src="https://unpkg.com/formotor/dist/formotor.zepto.js"></script>
 ```
 
 ### NPM
@@ -43,7 +43,7 @@ $ npm i formotor
 JQuery is the default build and can be imported directly.
 
 ```javascript
-import Formotor from 'formotor'
+import Formotor from 'formotor';
 
 // your code here...
 ```
@@ -62,5 +62,5 @@ module.exports = {
       formotor$: 'formotor/dist/formotor.zepto.esm.js'
     }
   }
-}
+};
 ```

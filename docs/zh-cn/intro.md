@@ -27,7 +27,7 @@ Formotor（意思是“表单发动机”）是一个基于 jQuery/Zepto 的轻�
 
 ```html
 <script src="https://unpkg.com/zepto"></script>
-<script src="https://unpkg.com/formotor"></script>
+<script src="https://unpkg.com/formotor/dist/formotor.zepto.js"></script>
 ```
 
 ### NPM
@@ -43,7 +43,7 @@ $ npm i formotor
 jQuery 为默认构建，直接引入即可。
 
 ```javascript
-import Formotor from 'formotor'
+import Formotor from 'formotor';
 
 // your code here...
 ```
@@ -62,5 +62,5 @@ module.exports = {
       formotor$: 'formotor/dist/formotor.zepto.esm.js'
     }
   }
-}
+};
 ```
