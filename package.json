@@ -1,7 +1,7 @@
 {
   "name": "formotor",
-  "version": "1.0.1",
-  "description": "A lightweight jquery/zepto component framework for forms inspired by vue.js.",
+  "version": "1.0.2",
+  "description": "A lightweight jquery/zepto form component framework(inspired by Vue.js).",
   "main": "dist/formotor.js",
   "module": "dist/formotor.esm.js",
   "scripts": {
@@ -10,6 +10,11 @@
     "test:unit": "cross-env NODE_ENV=test jest --config jest.config.js"
   },
   "repository": "git@github.com:felixpy/formotor.git",
+  "keywords": [
+    "form",
+    "component",
+    "framework"
+  ],
   "author": "felixpy <felixpy.1993@gmail.com>",
   "license": "MIT",
   "dependencies": {

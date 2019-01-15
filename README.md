@@ -1,6 +1,6 @@
 # Formotor.js
 
-A lightweight jquery/zepto component framework for forms inspired by vue.js.
+A lightweight jquery/zepto form component framework(inspired by Vue.js).
 
 [![License](https://img.shields.io/npm/l/formotor.svg)](https://www.npmjs.com/package/formotor)
 [![Version](https://img.shields.io/npm/v/formotor.svg)](https://www.npmjs.com/package/formotor)
@@ -11,19 +11,22 @@ A lightweight jquery/zepto component framework for forms inspired by vue.js.
 
 [Formotor TodoMVC Example](https://jsfiddle.net/felixpy/x28rdemc/)
 
-## Documentation
+## Docs
 
-The full documentation is [here](https://felixpy.github.io/formotor).
+[English](https://felixpy.github.io/formotor) | [简体中文](https://felixpy.github.io/formotor/#/zh-cn/)
 
-It contains several parts:
+Links:
 
 - [Quick Start](https://felixpy.github.io/formotor/#/intro)
 - [Guide](https://felixpy.github.io/formotor/#/component)
 - [API Reference](https://felixpy.github.io/formotor/#/api)
 
-### Translation
+## Core Features
 
-- [:cn: Chinese Simplified](https://felixpy.github.io/formotor/#/zh-cn/)
+- :camera: Component
+- :tv: Directive
+- :watch: Validation
+- :radio: Get/Set Values
 
 ## License
 

@@ -1,6 +1,6 @@
 # Formotor.js
 
-一个受 Vue.js 启发的轻量级的 jquery/zepto 表单组件框架。
+一个受 Vue.js 启发的轻量级 jquery/zepto 表单组件框架。
 
 [![License](https://img.shields.io/npm/l/formotor.svg)](https://www.npmjs.com/package/formotor)
 [![Version](https://img.shields.io/npm/v/formotor.svg)](https://www.npmjs.com/package/formotor)

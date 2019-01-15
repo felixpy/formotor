@@ -1,6 +1,6 @@
 # Formotor.js
 
-A lightweight jquery/zepto component framework for forms inspired by vue.js.
+A lightweight jquery/zepto form component framework(inspired by Vue.js).
 
 [![License](https://img.shields.io/npm/l/formotor.svg)](https://www.npmjs.com/package/formotor)
 [![Version](https://img.shields.io/npm/v/formotor.svg)](https://www.npmjs.com/package/formotor)
