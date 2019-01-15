@@ -1,6 +1,6 @@
 /**
- * Formotor.js v1.0.1
- * (c) 2018 Felix Yang
+ * Formotor.js v1.0.2
+ * (c) 2019 Felix Yang
  */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('zepto')) :
@@ -1306,7 +1306,7 @@
   registryProto(Formotor);
   registryGlobalAPI(Formotor);
 
-  Formotor.version = '1.0.1';
+  Formotor.version = '1.0.2';
 
   return Formotor;
 
