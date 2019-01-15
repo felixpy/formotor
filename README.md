@@ -15,7 +15,7 @@ A lightweight jquery/zepto form component framework(inspired by Vue.js).
 
 [English](https://felixpy.github.io/formotor) | [简体中文](https://felixpy.github.io/formotor/#/zh-cn/)
 
-Links:
+No longer waiting:
 
 - [Quick Start](https://felixpy.github.io/formotor/#/intro)
 - [Guide](https://felixpy.github.io/formotor/#/component)
