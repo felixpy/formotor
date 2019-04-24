@@ -4,6 +4,10 @@
   "description": "A lightweight jquery/zepto form component framework(inspired by Vue.js).",
   "main": "dist/formotor.js",
   "module": "dist/formotor.esm.js",
+  "files": [
+    "src",
+    "dist"
+  ],
   "scripts": {
     "build": "node scripts/build.js",
     "test": "yarn run test:unit",
