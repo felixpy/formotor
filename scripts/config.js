@@ -5,7 +5,8 @@ const replace = require('rollup-plugin-replace')
 const commonjs = require('rollup-plugin-commonjs')
 const version = process.env.VERSION || require('../package.json').version
 const year = new Date().getFullYear()
-const banner = '/**\n * Formotor.js v' + version + '\n * (c) ' + year + ' Felix Yang\n */'
+const banner =
+  '/**\n * Formotor.js v' + version + '\n * (c) ' + year + ' Felix Yang\n */'
 const moduleName = 'Formotor'
 
 const commonPlugins = [
@@ -26,7 +27,7 @@ const uglifyOptions = {
   }
 }
 const builds = {
-  'esm': {
+  esm: {
     input: {
       input: 'src/index.js',
       external: ['jquery'],
@@ -43,7 +44,7 @@ const builds = {
       banner
     }
   },
-  'umd': {
+  umd: {
     input: {
       input: 'src/index.js',
       external: ['jquery'],
@@ -153,8 +154,7 @@ const builds = {
 
 const genConfig = function (name) {
   const buildConfig = builds[name]
-  const config = Object.assign({
-  }, buildConfig)
+  const config = Object.assign({}, buildConfig)
 
   return config
 }

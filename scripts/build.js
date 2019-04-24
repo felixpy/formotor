@@ -15,14 +15,16 @@ function buildAll () {
   let i = 0
 
   const execTask = () => {
-    build(builds[i]).then(() => {
-      i++
-      if (i < len) {
-        execTask()
-      }
-    }).catch(err => {
-      console.log(err)
-    })
+    build(builds[i])
+      .then(() => {
+        i++
+        if (i < len) {
+          execTask()
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   execTask()
