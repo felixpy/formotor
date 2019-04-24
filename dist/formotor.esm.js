@@ -1,5 +1,5 @@
 /**
- * Formotor.js v1.0.2
+ * Formotor.js v1.1.0
  * (c) 2019 Felix Yang
  */
 import JZ from 'jquery';
@@ -1300,6 +1300,6 @@ function registryProto(Formotor) {
 registryProto(Formotor);
 registryGlobalAPI(Formotor);
 
-Formotor.version = '1.0.2';
+Formotor.version = '1.1.0';
 
 export default Formotor;
